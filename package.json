@@ -18,6 +18,12 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "flow-bin": "^0.73.0"
+    "flow-bin": "^0.73.0",
+    "husky": "^1.0.0-rc.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn flow"
+    }
   }
 }
