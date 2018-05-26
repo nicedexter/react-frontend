@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from "react";
+import Variables from './components/Variables';
 import { Navbar, Jumbotron } from "react-bootstrap";
 import "./App.css";
 
@@ -16,8 +17,9 @@ class App extends Component<Props, State> {
       <div className="App">
         <Navbar />
         <Jumbotron>
-          <h1>Hey</h1>
+          <h1>Hello MIP</h1>
         </Jumbotron>
+        <Variables />
       </div>
     );
   }
