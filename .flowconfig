@@ -4,8 +4,14 @@
 
 [libs]
 
+
 [lints]
+untyped-type-import=error
+untyped-import=error
+sketchy-null=warn
+sketchy-null-bool=off
 
 [options]
+include_warnings=true
 
 [strict]
