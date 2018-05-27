@@ -1,25 +1,50 @@
-import React from "react";
-import { render } from "react-dom";
-import registerServiceWorker from "./registerServiceWorker";
+// @flow
 
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
+import React from 'react'
+import { render } from 'react-dom'
 
-import "./index.css";
-import App from "./App";
+import ApolloClient from 'apollo-boost' // flowlint-line untyped-import:off
+import { ApolloProvider } from 'react-apollo' // flowlint-line untyped-import:off
+import { InMemoryCache } from 'apollo-cache-inmemory' // flowlint-line untyped-import:off
 
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/css/bootstrap-theme.css";
+import { BrowserRouter as Router } from 'react-router-dom' // flowlint-line untyped-import:off
 
+import './index.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap-theme.css'
+
+import App from './App'
+import typeDefs from './graphql/typeDefs'
+
+import registerServiceWorker from './registerServiceWorker'
+
+const defaultState = {
+  variables: {
+    __typename: 'Variable',
+  },
+}
+
+const cache = new InMemoryCache()
 const client = new ApolloClient({
-  uri: "http://localhost:3000/graphql/"
-});
+  uri: 'http://localhost:3000/graphql/',
+  clientState: {
+    defaults: defaultState,
+    typeDefs,
+  },
+  cache,
+})
 
-const ApolloApp = () => (
+const root = document.getElementById('root')
+if (root == null) {
+  throw new Error('no root element')
+}
+
+render(
   <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
-);
-
-render(<ApolloApp />, document.getElementById("root"));
-registerServiceWorker();
+    <Router>
+      <App />
+    </Router>
+  </ApolloProvider>,
+  root
+)
+registerServiceWorker()
