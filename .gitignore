@@ -6,4 +6,3 @@ build/
 .module-cache
 *.log*
 .idea
-.vscode
