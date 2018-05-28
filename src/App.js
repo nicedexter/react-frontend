@@ -2,22 +2,14 @@
 
 import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom' // flowlint-line untyped-import:off
-import Variables from './components/Variables'
-import { Navbar, Jumbotron } from 'react-bootstrap' // flowlint-line untyped-import:off
+
+import { Navbar } from 'react-bootstrap' // flowlint-line untyped-import:off
+import Home from './components/Home'
+
 import './App.css'
 
 type Props = {}
 type State = {}
-
-const Home = () => (
-  <div>
-    <h2> Home </h2>
-    <Jumbotron>
-      <h1>Hello MIP</h1>
-    </Jumbotron>
-    <Variables />
-  </div>
-)
 
 const Detail = () => (
   <div>

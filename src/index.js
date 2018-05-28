@@ -14,23 +14,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'
 
 import App from './App'
-import typeDefs from './graphql/typeDefs'
-
 import registerServiceWorker from './registerServiceWorker'
-
-const defaultState = {
-  variables: {
-    __typename: 'Variable',
-  },
-}
 
 const cache = new InMemoryCache()
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql/',
-  clientState: {
-    defaults: defaultState,
-    typeDefs,
-  },
   cache,
 })
 
