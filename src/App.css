@@ -1,3 +1,7 @@
 .App {
-  text-align: center;
+}
+
+.navbar ul li {
+  display: inline;
+  margin-left: 2em;
 }

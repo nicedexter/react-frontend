@@ -3,7 +3,7 @@
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 
 const ElementProps = PropTypes.shape({
-  code: PropTypes.string.isRequired,
+  code: PropTypes.string,
   label: PropTypes.string,
 })
 
@@ -29,4 +29,12 @@ const groups = {
 groups.groups = PropTypes.arrayOf(PropTypes.shape(groups))
 const GroupsProps = PropTypes.shape(groups)
 
-export { VariableListProps, GroupsProps }
+const HierarchyNodeProps = PropTypes.shape({
+  code: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  groups: PropTypes.arrayOf(GroupsProps),
+  variables: VariableListProps,
+})
+const HierarchyProps = PropTypes.arrayOf(HierarchyNodeProps)
+
+export { HierarchyProps }

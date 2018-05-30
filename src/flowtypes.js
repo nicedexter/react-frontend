@@ -21,8 +21,17 @@ type GroupsType = {
   code: string,
   label: string,
   groups: Array<GroupsType>,
+  variables: Array<VariableType>,
 }
 
 type VariableListType = Array<VariableType>
 
-export type { VariableType, VariableListType, GroupsType }
+type HierarchyType = {
+  code: string,
+  label: string,
+  groups: GroupsType,
+  variables: VariableListType,
+  map: Function, // FIXME: ditch map from type
+}
+
+export type { VariableType, VariableListType, GroupsType, HierarchyType }

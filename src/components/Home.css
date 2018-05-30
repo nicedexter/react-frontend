@@ -1,21 +1,19 @@
 body {
-  margin: 40px;
+  margin: 16px;
 }
 
 .wrapper {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 8px;
   grid-template-columns: 50% 25% 25%;
   background-color: #fff;
-  color: #444;
 }
 
 .box {
   background-color: #444;
   color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 150%;
+  border-radius: 8px;
+  padding: 16px;
 }
 
 .a {
