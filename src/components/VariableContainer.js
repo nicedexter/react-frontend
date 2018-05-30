@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql } from 'react-apollo' // flowlint-line untyped-import:off
 
-import allVariables from '../graphql/allvariables'
+import allGroupsAndVariables from '../graphql/allGroupsAndVariables'
 import VariableList from './VariableList'
 
 import { VariableListProps } from '../proptypes'
@@ -34,7 +34,7 @@ class VariableContainer extends React.Component<Props> {
 
 VariableContainer.propTypes = propTypes
 
-export default graphql(allVariables, {
+export default graphql(allGroupsAndVariables, {
   props: ({ data: { loading, error, variables } }) => ({
     loading,
     error,
