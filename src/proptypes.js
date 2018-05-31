@@ -37,4 +37,10 @@ const HierarchyNodeProps = PropTypes.shape({
 })
 const HierarchyProps = PropTypes.arrayOf(HierarchyNodeProps)
 
-export { HierarchyProps }
+const TreeViewProps = {
+  collapsed: PropTypes.bool,
+  defaultCollapsed: PropTypes.bool,
+  nodeLabel: PropTypes.node.isRequired,
+}
+
+export { HierarchyProps, TreeViewProps }

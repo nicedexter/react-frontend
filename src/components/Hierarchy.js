@@ -2,34 +2,47 @@
 
 import React from 'react'
 
-import { HierarchyProps } from '../proptypes'
-import type { VariableListType, GroupsType, HierarchyType } from '../flowtypes'
+import TreeView from './TreeView/TreeView'
+import './TreeView/TreeView.css'
 
-import './Hierarchy.css'
+import { HierarchyProps } from '../proptypes'
+import type { VariableType, GroupsType, HierarchyArrayType } from '../flowtypes'
 
 const propTypes = {
   hierarchy: HierarchyProps.isRequired,
 }
 
-const variableView = (variables: VariableListType) =>
-  variables.map(variable => (
-    <p className="variable" key={variable.code}>
-      {variable.label}
-    </p>
+const variableView = (variables: Array<VariableType>) =>
+  variables.map((variable: VariableType, i: number) => (
+    <TreeView
+      key={variable.code + '|' + i}
+      nodeLabel={variable.label}
+      defaultCollapsed={true}
+    >
+      <div className="info">{variable.description}</div>
+      <div className="info">type: {variable.type}</div>
+      <div className="info">methodology: {variable.methodology}</div>
+    </TreeView>
   ))
 
-const groupView = (group: GroupsType) => (
+const groupView = (group: GroupsType, i: number) => (
   <div key={group.code} className="groupContainer">
-    <p className="group">{group.label}</p>
-    {group.variables.length > 0 ? variableView(group.variables) : null}
-    {group.groups && group.groups.length > 0
-      ? group.groups.map(groupView)
-      : null}
+    <TreeView
+      key={group.code + '|' + i}
+      nodeLabel={group.label}
+      defaultCollapsed={true}
+    >
+      {group.variables.length > 0 ? variableView(group.variables) : null}
+      {group.groups && group.groups.length > 0
+        ? group.groups.map(groupView)
+        : null}
+    </TreeView>
   </div>
 )
 
-const Hierarchy = ({ hierarchy }: { hierarchy: HierarchyType }) =>
-  console.log(hierarchy) || <div>{hierarchy.map(groupView)}</div>
+const Hierarchy = ({ hierarchy }: { hierarchy: HierarchyArrayType }) => (
+  <div>{hierarchy.map(groupView)}</div>
+)
 
 Hierarchy.propTypes = propTypes
 

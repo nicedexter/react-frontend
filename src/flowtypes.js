@@ -1,5 +1,7 @@
 // @flow
 
+import type { Node } from 'react'
+
 type Element = {
   code: string,
   label: string,
@@ -24,14 +26,19 @@ type GroupsType = {
   variables: Array<VariableType>,
 }
 
-type VariableListType = Array<VariableType>
-
-type HierarchyType = {
+type HierarchyArrayType = Array<{
   code: string,
   label: string,
-  groups: GroupsType,
-  variables: VariableListType,
-  map: Function, // FIXME: ditch map from type
+  groups: Array<GroupsType>,
+  variables: Array<VariableType>,
+}>
+
+type TreeViewType = {
+  collapsed?: boolean,
+  defaultCollapsed?: boolean,
+  nodeLabel: Node,
+  onClick?: Function,
+  children: Node,
 }
 
-export type { VariableType, VariableListType, GroupsType, HierarchyType }
+export type { VariableType, GroupsType, HierarchyArrayType, TreeViewType }
