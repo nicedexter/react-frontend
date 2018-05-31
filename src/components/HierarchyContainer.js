@@ -12,13 +12,13 @@ import type { VariableListType, GroupsType, HierarchyType } from '../flowtypes'
 
 const propTypes = {
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.object,
   hierarchy: HierarchyProps.isRequired,
 }
 
 type Props = {
   loading: boolean,
-  error: string,
+  error: Object,
   hierarchy: HierarchyType,
 }
 
@@ -27,7 +27,7 @@ class HierarchyContainer extends React.Component<Props> {
     const { loading, error, hierarchy } = this.props
 
     if (loading) return <p>Loading...</p>
-    if (error) return <p>Error :(</p>
+    if (error) return <p>Error {error.message}</p>
 
     return <Hierarchy hierarchy={hierarchy} />
   }
@@ -35,7 +35,7 @@ class HierarchyContainer extends React.Component<Props> {
 
 HierarchyContainer.propTypes = propTypes
 
-const makeHierarchy = (groups, variables) =>
+const makeHierarchy = (groups: GroupsType[], variables: VariableListType) =>
   groups.map(group => ({
     code: group.code,
     label: group.label,
