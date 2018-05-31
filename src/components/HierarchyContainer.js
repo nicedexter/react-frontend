@@ -18,10 +18,10 @@ const propTypes = {
 type Props = {
   loading: boolean,
   error?: Object,
-  hierarchy: HierarchyArrayType,
+  hierarchy: GroupsType[],
 }
 
-class HierarchyContainer extends React.Component<Props> {
+class HierarchyContainer extends React.PureComponent<Props> {
   render() {
     const { loading, error, hierarchy } = this.props
 

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
@@ -8,16 +8,13 @@ import Experiment from './components/Experiment'
 
 import './App.css'
 
-type Props = {}
-type State = {}
-
 const Detail = () => (
   <div>
     <h2> Detail </h2>
   </div>
 )
 
-class App extends Component<Props, State> {
+class App extends PureComponent<*> {
   render() {
     return (
       <div className="App">
