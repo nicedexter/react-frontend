@@ -6,7 +6,6 @@ import TreeView from './TreeView/TreeView'
 import './TreeView/TreeView.css'
 
 import { HierarchyProps } from '../proptypes'
-import type { VariableType, GroupsType, HierarchyArrayType } from '../flowtypes'
 
 const propTypes = {
   hierarchy: HierarchyProps.isRequired,

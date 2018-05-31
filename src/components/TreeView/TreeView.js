@@ -3,7 +3,6 @@
 // Code modified from https://github.com/chenglou/react-treeview
 import React from 'react'
 import { TreeViewProps } from '../../proptypes'
-import type { TreeViewType } from '../../flowtypes'
 
 type Props = TreeViewType
 type State = {

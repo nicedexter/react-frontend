@@ -8,7 +8,6 @@ import allGroupsAndVariables from '../graphql/allGroupsAndVariables'
 import Hierarchy from './Hierarchy'
 
 import { HierarchyProps } from '../proptypes'
-import type { VariableType, GroupsType, HierarchyArrayType } from '../flowtypes'
 
 const propTypes = {
   loading: PropTypes.bool.isRequired,
@@ -18,7 +17,7 @@ const propTypes = {
 
 type Props = {
   loading: boolean,
-  error: Object,
+  error?: Object,
   hierarchy: HierarchyArrayType,
 }
 

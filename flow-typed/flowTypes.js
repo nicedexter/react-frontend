@@ -2,43 +2,41 @@
 
 import type { Node } from 'react'
 
-type Element = {
+declare type VarElement = {
   code: string,
   label: string,
 }
 
-type VariableType = {
+declare type VariableType = {
   code: string,
   label: string,
   type: string,
   sql_type: string,
   description: string,
   methodology: string,
-  enumerations: Array<Element>,
-  group: Element,
+  enumerations: Array<VarElement>,
+  group: VarElement,
   isVariable: boolean,
 }
 
-type GroupsType = {
+declare type GroupsType = {
   code: string,
   label: string,
   groups: Array<GroupsType>,
   variables: Array<VariableType>,
 }
 
-type HierarchyArrayType = Array<{
+declare type HierarchyArrayType = Array<{
   code: string,
   label: string,
   groups: Array<GroupsType>,
   variables: Array<VariableType>,
 }>
 
-type TreeViewType = {
+declare type TreeViewType = {
   collapsed?: boolean,
   defaultCollapsed?: boolean,
   nodeLabel: Node,
   onClick?: Function,
   children: Node,
 }
-
-export type { VariableType, GroupsType, HierarchyArrayType, TreeViewType }
