@@ -1,19 +1,19 @@
 // @flow
 
 import React from 'react'
-import HierarchyContainer from './HierarchyContainer'
-import './Experiment.css'
+import { Pager } from 'react-bootstrap' // flowlint-line untyped-import:off
+import Exploration from './Exploration'
 
 export default () => (
   <div>
-    <h4>Epidemiological Exploration</h4>
-    <div className="wrapper">
-      <div className="box a">
-        <HierarchyContainer />
-      </div>
-      <div className="box b">Model</div>
-      <div className="box c">C</div>
-      <div className="box d">D</div>
-    </div>
+    <Pager>
+      <Pager.Item>Exploration</Pager.Item>
+      {' > '}
+      <Pager.Item disabled>Analysis</Pager.Item>
+      {' > '}
+      <Pager.Item disabled>Experiment</Pager.Item>
+    </Pager>
+
+    <Exploration />
   </div>
 )

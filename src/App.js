@@ -1,10 +1,10 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom' // flowlint-line untyped-import:off
+import { Route } from 'react-router-dom' // flowlint-line untyped-import:off
 
-import { Navbar } from 'react-bootstrap' // flowlint-line untyped-import:off
-import Home from './components/Home'
+import Navbar from './components/Navbar'
+import Experiment from './components/Experiment'
 
 import './App.css'
 
@@ -21,18 +21,9 @@ class App extends Component<Props, State> {
   render() {
     return (
       <div className="App">
-        <Navbar>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/details">Detail</Link>
-            </li>
-          </ul>
-        </Navbar>
+        <Navbar />
 
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Experiment} />
         <Route path="/details" component={Detail} />
       </div>
     )
