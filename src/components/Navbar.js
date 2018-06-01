@@ -1,10 +1,10 @@
 // @flow
 
-import React, { Component } from 'react'
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap' // flowlint-line untyped-import:off
-import { Link } from 'react-router-dom' // flowlint-line untyped-import:off
+import React, { PureComponent } from 'react'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-class NavbarView extends Component<*> {
+class NavbarView extends PureComponent<*> {
   render() {
     return (
       <Navbar>

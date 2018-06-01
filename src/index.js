@@ -7,7 +7,7 @@ import ApolloClient from 'apollo-boost' // flowlint-line untyped-import:off
 import { ApolloProvider } from 'react-apollo' // flowlint-line untyped-import:off
 import { InMemoryCache } from 'apollo-cache-inmemory' // flowlint-line untyped-import:off
 
-import { BrowserRouter as Router } from 'react-router-dom' // flowlint-line untyped-import:off
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.css'

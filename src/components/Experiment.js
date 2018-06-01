@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { Pager } from 'react-bootstrap' // flowlint-line untyped-import:off
+import { Pager } from 'react-bootstrap'
 import Exploration from './Exploration'
 
 export default () => (

@@ -3,9 +3,7 @@
 import React from 'react'
 
 import TreeView from './TreeView/TreeView'
-
 import { HierarchyProps } from '../proptypes'
-import type { VariableType, GroupsType, HierarchyArrayType } from '../flowtypes'
 
 const propTypes = {
   hierarchy: HierarchyProps.isRequired,
@@ -31,15 +29,13 @@ const groupView = (group: GroupsType, i: number) => (
       nodeLabel={group.label}
       defaultCollapsed={true}
     >
-      {group.variables.length > 0 ? variableView(group.variables) : null}
-      {group.groups && group.groups.length > 0
-        ? group.groups.map(groupView)
-        : null}
+      {group.variables ? variableView(group.variables) : null}
+      {group.groups ? group.groups.map(groupView) : null}
     </TreeView>
   </div>
 )
 
-const Hierarchy = ({ hierarchy }: { hierarchy: HierarchyArrayType }) => (
+const Hierarchy = ({ hierarchy }: { hierarchy: GroupsType[] }) => (
   <div>{hierarchy.map(groupView)}</div>
 )
 

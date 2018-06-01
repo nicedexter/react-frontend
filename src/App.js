@@ -1,7 +1,7 @@
 // @flow
 
-import React, { Component } from 'react'
-import { Route } from 'react-router-dom' // flowlint-line untyped-import:off
+import React, { PureComponent } from 'react'
+import { Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
 import Experiment from './components/Experiment'
@@ -14,7 +14,7 @@ const Detail = () => (
   </div>
 )
 
-class App extends Component<*> {
+class App extends PureComponent<*> {
   render() {
     return (
       <div className="App">

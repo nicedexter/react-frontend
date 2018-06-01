@@ -8,7 +8,6 @@ import allGroupsAndVariables from '../graphql/allGroupsAndVariables'
 import Hierarchy from './Hierarchy'
 
 import { HierarchyProps } from '../proptypes'
-import type { VariableType, GroupsType, HierarchyArrayType } from '../flowtypes'
 
 const propTypes = {
   loading: PropTypes.bool.isRequired,
@@ -18,11 +17,11 @@ const propTypes = {
 
 type Props = {
   loading: boolean,
-  error: Object,
-  hierarchy: HierarchyArrayType,
+  error?: Object,
+  hierarchy: GroupsType[],
 }
 
-class HierarchyContainer extends React.Component<Props> {
+class HierarchyContainer extends React.PureComponent<Props> {
   render() {
     const { loading, error, hierarchy } = this.props
 
