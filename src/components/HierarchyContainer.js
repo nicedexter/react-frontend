@@ -2,9 +2,9 @@
 
 import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
-import { graphql } from 'react-apollo' // flowlint-line untyped-import:off
+import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import allGroupsAndVariables from '../graphql/allGroupsAndVariables'
+import { allGroupsAndVariables, updateModel } from '../graphql'
 import Hierarchy from './Hierarchy'
 
 import { HierarchyProps } from '../proptypes'
@@ -22,13 +22,27 @@ type Props = {
 }
 
 class HierarchyContainer extends React.PureComponent<Props> {
+  handleClick = code => {
+    const { updateModel } = this.props
+    updateModel({
+      variables: {
+        index: 'mymodel',
+        variables: code,
+      },
+    })
+  }
+
   render() {
     const { loading, error, hierarchy } = this.props
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error {error.message}</p>
 
-    return <Hierarchy hierarchy={hierarchy} />
+    return (
+      <div>
+        <Hierarchy hierarchy={hierarchy} handleClick={this.handleClick} />
+      </div>
+    )
   }
 }
 
@@ -42,15 +56,20 @@ const makeHierarchy = (groups: GroupsType[], variables: Array<VariableType>) =>
     variables: variables.filter(variable => variable.group.code === group.code),
   }))
 
-export default graphql(allGroupsAndVariables, {
-  props: ({ data: { loading, error, variables, groups } }) => {
-    const hierarchy =
-      variables.length && groups ? makeHierarchy(groups.groups, variables) : []
+export default compose(
+  graphql(updateModel, { name: 'updateModel' }),
+  graphql(allGroupsAndVariables, {
+    props: ({ data: { loading, error, variables, groups } }) => {
+      const hierarchy =
+        variables.length && groups
+          ? makeHierarchy(groups.groups, variables)
+          : []
 
-    return {
-      loading,
-      error,
-      hierarchy,
-    }
-  },
-})(HierarchyContainer)
+      return {
+        loading,
+        error,
+        hierarchy,
+      }
+    },
+  })
+)(HierarchyContainer)
