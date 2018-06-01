@@ -41,6 +41,7 @@ const TreeViewProps = {
   collapsed: PropTypes.bool,
   defaultCollapsed: PropTypes.bool,
   nodeLabel: PropTypes.node.isRequired,
+  nodeIcon: PropTypes.node,
 }
 
 export { HierarchyProps, TreeViewProps }
