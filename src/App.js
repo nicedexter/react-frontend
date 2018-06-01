@@ -8,16 +8,13 @@ import Experiment from './components/Experiment'
 
 import './App.css'
 
-type Props = {}
-type State = {}
-
 const Detail = () => (
   <div>
     <h2> Detail </h2>
   </div>
 )
 
-class App extends Component<Props, State> {
+class App extends Component<*> {
   render() {
     return (
       <div className="App">

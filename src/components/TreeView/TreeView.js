@@ -4,6 +4,7 @@
 import React from 'react'
 import { TreeViewProps } from '../../proptypes'
 import type { TreeViewType } from '../../flowtypes'
+import './TreeView.css'
 
 type Props = TreeViewType
 type State = {
