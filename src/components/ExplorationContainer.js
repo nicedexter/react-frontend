@@ -21,13 +21,14 @@ type Props = {
   hierarchy: GroupsType[],
 }
 
-class HierarchyContainer extends React.PureComponent<Props> {
-  handleClick = code => {
+class ExplorationContainer extends React.PureComponent<Props> {
+  handleClick = ({ code, isGroup, asVariable }) => {
     const { updateModel } = this.props
     updateModel({
       variables: {
         index: 'mymodel',
-        variables: code,
+        variables: asVariable ? code : null,
+        covariables: asVariable ? null : code,
       },
     })
   }
@@ -46,7 +47,7 @@ class HierarchyContainer extends React.PureComponent<Props> {
   }
 }
 
-HierarchyContainer.propTypes = propTypes
+ExplorationContainer.propTypes = propTypes
 
 const makeHierarchy = (groups: GroupsType[], variables: Array<VariableType>) =>
   groups.map(group => ({
@@ -72,4 +73,4 @@ export default compose(
       }
     },
   })
-)(HierarchyContainer)
+)(ExplorationContainer)

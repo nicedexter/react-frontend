@@ -4,7 +4,17 @@
 }
 
 .tree-view_item {
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
   /* immediate child of .tree-view, for styling convenience */
+}
+
+.tree-view_item:hover {
+  background-color: hsla(224, 53%, 60%, 0.1);
 }
 
 /* style for the children nodes container */
@@ -19,19 +29,16 @@
 .tree-view_arrow {
   cursor: pointer;
   margin-right: 6px;
-  display: inline-block;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  flex: 1;
 }
 
 .tree-view_arrow:after {
   content: '▾';
-}
-
-.button {
-  float: right;
+  flex: 1;
 }
 
 /* rotate the triangle to close it */
@@ -40,4 +47,5 @@
   -moz-transform: rotate(-90deg);
   -ms-transform: rotate(-90deg);
   transform: rotate(-90deg);
+  flex: 1;
 }

@@ -1,0 +1,14 @@
+.title {
+  margin: 5px;
+  width: 100%;
+}
+
+p {
+  font: 0.8em sans-serif;
+}
+
+.item {
+  flex: 1;
+  white-space: nowrap;
+  margin: 0 5px;
+}

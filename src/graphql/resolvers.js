@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 
 export default {
   Mutation: {
-    updateModel: (_, { index, variables }, { cache }) => {
+    updateModel: (_, { index, variables, covariables }, { cache }) => {
       const query = gql`
         query GetCurrentModel {
           currentModel @client {
@@ -19,6 +19,7 @@ export default {
         currentModel: {
           ...previous.currentModel,
           variables: previous.currentModel.variables.concat(variables),
+          covariables: previous.currentModel.covariables.concat(covariables),
         },
       }
 
