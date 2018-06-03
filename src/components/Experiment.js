@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { Pager, Tabs, Tab } from 'react-bootstrap'
+import { Panel, Pager, Tabs, Tab } from 'react-bootstrap'
 import ExplorationContainer from './ExplorationContainer'
 import ModelContainer from './ModelContainer'
 
@@ -19,26 +19,44 @@ export default () => (
     <div>
       <div className="wrapper">
         <div className="box exploration">
-          <h2>Epidemiological Exploration</h2>
-          <ExplorationContainer />
+          <Panel id="collapsible-exploration" defaultExpanded>
+            <Panel.Heading>
+              <Panel.Title toggle>Epidemiological Exploration</Panel.Title>
+            </Panel.Heading>
+            <Panel.Collapse>
+              <Panel.Body>
+                <ExplorationContainer />
+              </Panel.Body>
+            </Panel.Collapse>
+          </Panel>
+          <Panel id="collapsible-analysis" defaultExpanded>
+            <Panel.Heading>
+              <Panel.Title toggle>Analysis</Panel.Title>
+            </Panel.Heading>
+            <Panel.Collapse>
+              <Panel.Body />
+            </Panel.Collapse>
+          </Panel>
+          <Panel id="collapsible-experiment" defaultExpanded>
+            <Panel.Heading>
+              <Panel.Title toggle>Experiment</Panel.Title>
+            </Panel.Heading>
+            <Panel.Collapse>
+              <Panel.Body />
+            </Panel.Collapse>
+          </Panel>
         </div>
         <div className="box current-model">
-          <h2>Current Model</h2>
-          <ModelContainer />
-          <h3>Available Algorithms</h3>
-          <ul>
-            <li>...</li>
-          </ul>
-        </div>
-        <div className="box analysis">
-          <Tabs>
-            <Tab eventKey={1} title="Analysis">
-              Analysis
-            </Tab>
-            <Tab eventKey={2} title="Experiment">
-              Experiment
-            </Tab>
-          </Tabs>
+          <Panel id="collapsible-exploration" defaultExpanded>
+            <Panel.Heading>
+              <Panel.Title toggle>Current Model</Panel.Title>
+            </Panel.Heading>
+            <Panel.Collapse>
+              <Panel.Body>
+                <ModelContainer />
+              </Panel.Body>
+            </Panel.Collapse>
+          </Panel>
         </div>
       </div>
     </div>
