@@ -4,8 +4,13 @@ import React from 'react'
 import { Label, Button } from 'react-bootstrap'
 
 import './Model.css'
+import { ModelProps } from '../proptypes'
 
-export default ({ currentModel: { variables, covariables, filters } }) => (
+const ModelView = ({
+  currentModel: { variables, covariables, filters },
+}: {
+  currentModel: ModelType,
+}) => (
   <div>
     <Button bsStyle="primary">Save</Button>
     <div className="variables">
@@ -37,3 +42,7 @@ export default ({ currentModel: { variables, covariables, filters } }) => (
     </div>
   </div>
 )
+
+ModelView.propType = ModelProps
+
+export default ModelView

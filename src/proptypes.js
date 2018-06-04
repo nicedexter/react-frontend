@@ -44,4 +44,10 @@ const TreeViewProps = {
   nodeIcon: PropTypes.node,
 }
 
-export { HierarchyProps, TreeViewProps }
+const ModelProps = PropTypes.shape({
+  variables: VariableListProps,
+  covariables: VariableListProps,
+  filters: VariableListProps,
+})
+
+export { ModelProps, HierarchyProps, TreeViewProps }

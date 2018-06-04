@@ -3,13 +3,12 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import gql from 'graphql-tag'
 import { ApolloClient } from 'apollo-client' // flowlint-line untyped-import:off
 import { ApolloProvider } from 'react-apollo' // flowlint-line untyped-import:off
 import { InMemoryCache } from 'apollo-cache-inmemory' // flowlint-line untyped-import:off
-import { withClientState } from 'apollo-link-state'
-import { HttpLink } from 'apollo-link-http'
-import { ApolloLink } from 'apollo-link'
+import { withClientState } from 'apollo-link-state' // flowlint-line untyped-import:off
+import { HttpLink } from 'apollo-link-http' // flowlint-line untyped-import:off
+import { ApolloLink } from 'apollo-link' // flowlint-line untyped-import:off
 
 import { BrowserRouter as Router } from 'react-router-dom'
 
@@ -50,6 +49,6 @@ render(
       <App />
     </Router>
   </ApolloProvider>,
-  document.getElementById('root')
+  root
 )
 registerServiceWorker()

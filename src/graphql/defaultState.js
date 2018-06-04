@@ -1,3 +1,5 @@
+// @flow
+
 export default {
   currentModel: {
     __typename: 'Model',

@@ -31,7 +31,6 @@ class TreeView extends React.PureComponent<Props, State> {
       collapsed = this.state.collapsed,
       nodeLabel,
       nodeIcon,
-      button,
       children,
       defaultCollapsed,
       ...rest
@@ -50,10 +49,9 @@ class TreeView extends React.PureComponent<Props, State> {
 
     return (
       <div className={'tree-view'}>
-        <div className={'tree-view_item'}>
+        <div className={'tree-view_item'} onClick={this.handleClick}>
           {arrow}
           {nodeIcon} {nodeLabel}
-          {button}
         </div>
         <div className={containerClassName}>{collapsed ? null : children}</div>
       </div>

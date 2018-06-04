@@ -4,26 +4,29 @@ import React from 'react'
 
 import TreeView from './TreeView/TreeView'
 import { HierarchyProps } from '../proptypes'
-import { Glyphicon, Button, Label, Popover } from 'react-bootstrap'
+import { Glyphicon, Button } from 'react-bootstrap'
 
 import './Hierarchy.css'
-const propTypes = {
-  hierarchy: HierarchyProps.isRequired,
+
+type Props = {
+  hierarchy: GroupsType[],
+  handleClick: Function,
 }
-class Hierarchy extends React.PureComponent<*> {
-  constructor(props) {
+
+class Hierarchy extends React.PureComponent<Props> {
+  constructor(props: Props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick = args => {
+  handleClick = (args: { code: string, isVariable: boolean }) => {
     this.props.handleClick(args)
   }
   groupView = (group: GroupsType, i: number) => (
     <div key={group.code} className="groupContainer">
       <TreeView
         key={group.code + '|' + i}
-        nodeLabel={this.label({ ...group, isGroup: true })}
+        nodeLabel={this.label({ ...group, group, isVariable: false })}
         defaultCollapsed={true}
       >
         {group.variables ? this.variableView(group.variables) : null}
@@ -32,15 +35,15 @@ class Hierarchy extends React.PureComponent<*> {
     </div>
   )
 
-  label = ({ code, label, description, isGroup }: VariableType) => (
+  label = ({ code, label, description, goup, isVariable }: VariableType) => (
     <React.Fragment>
       <span className="title">
         <strong>{label}</strong>
       </span>
-      <Label className="item"> 5 subgroups, 56 variables</Label>
+      <p className="item"> 5 subgroups, 56 variables</p>
       <p className="item">Add to model as</p>
       <Button
-        onClick={() => this.handleClick({ code, isGroup, asVariable: true })}
+        onClick={() => this.handleClick({ code, isVariable, asVariable: true })}
         className="item"
         bsSize="xsmall"
         bsStyle="primary"
@@ -48,7 +51,7 @@ class Hierarchy extends React.PureComponent<*> {
         variables{' '}
       </Button>
       <Button
-        onClick={() => this.handleClick({ code, isGroup })}
+        onClick={() => this.handleClick({ code, isVariable })}
         className="item"
         bsSize="xsmall"
         bsStyle="primary"
@@ -58,14 +61,14 @@ class Hierarchy extends React.PureComponent<*> {
     </React.Fragment>
   )
 
-  variableView = (variables: Array<VariableType>) =>
+  variableView = (variables: VariableType[]) =>
+    // $FlowFixMe
     variables.map((variable: VariableType, i: number) => (
       <TreeView
         key={variable.code + '|' + i}
         nodeLabel={this.label(variable)}
         defaultCollapsed={true}
         nodeIcon={<Glyphicon glyph="signal" />}
-        //button={this.button(variable.code)}
       >
         <div className="info">{variable.description}</div>
         <div className="info">type: {variable.type}</div>
@@ -79,6 +82,6 @@ class Hierarchy extends React.PureComponent<*> {
   }
 }
 
-Hierarchy.propTypes = propTypes
+Hierarchy.propTypes = HierarchyProps.isRequired
 
 export default Hierarchy

@@ -723,4 +723,8 @@ declare module 'react-bootstrap' {
     visibleLgBlock?: boolean,
     bsClass?: string,
   }> {}
+
+  declare export class Glyphicon extends React$Component<{
+    componentClass?: ElementType,
+  }> {}
 }

@@ -4,25 +4,23 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { createModel, getCurrentModel, updateModel } from '../graphql'
+import { getCurrentModel } from '../graphql'
 import ModelView from './ModelView'
+import { ModelProps } from '../proptypes'
 
 const propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
+  currentModel: ModelProps,
 }
 
 type Props = {
   loading: boolean,
   error?: Object,
+  currentModel: ModelType,
 }
 
 class ModelContainer extends React.PureComponent<Props> {
-  state = {
-    created: false,
-    error: null,
-  }
-
   // createModel = async () => {
   //   const { createModel, currentModel } = this.props
   //   try {
@@ -39,6 +37,7 @@ class ModelContainer extends React.PureComponent<Props> {
   // }
 
   handleClick = args => {
+    /*
     const { updateModel } = this.props
     updateModel({
       variables: {
@@ -46,11 +45,11 @@ class ModelContainer extends React.PureComponent<Props> {
         variables: args,
       },
     })
+    */
   }
 
   render() {
-    const { loading, currentModel, updateModel } = this.props
-    const { created, error } = this.state
+    const { loading, error, currentModel } = this.props
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error {error.message}</p>
@@ -63,12 +62,16 @@ class ModelContainer extends React.PureComponent<Props> {
   }
 }
 
-ModelView.propTypes = propTypes
+ModelContainer.propTypes = propTypes
 
 export default compose(
   // graphql(createModel, { name: 'mymodel' }),
   // graphql(updateModel, { name: 'updateModel' }),
   graphql(getCurrentModel, {
-    props: ({ data: { loading, currentModel } }) => ({ currentModel }),
+    props: ({ data: { loading, error, currentModel } }) => ({
+      loading,
+      error,
+      currentModel,
+    }),
   })
 )(ModelContainer)

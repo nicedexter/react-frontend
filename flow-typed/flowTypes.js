@@ -14,7 +14,7 @@ declare type VariableType = {
   sql_type?: string,
   description?: string,
   methodology?: string,
-  enumerations?: Array<VarElement>,
+  enumerations?: VarElement[],
   group: VarElement,
   isVariable: boolean,
 }
@@ -22,8 +22,8 @@ declare type VariableType = {
 declare type GroupsType = {
   code: string,
   label?: string,
-  groups?: Array<GroupsType>,
-  variables?: Array<VariableType>,
+  groups?: GroupsType[],
+  variables?: VariableType[],
 }
 
 declare type TreeViewType = {
@@ -32,4 +32,12 @@ declare type TreeViewType = {
   nodeLabel: Node,
   onClick?: Function,
   children: Node,
+  nodeIcon?: Node,
+  key?: string,
+}
+
+declare type ModelType = {
+  variables: VariableType[],
+  covariables: VariableType[],
+  filters: VariableType[],
 }

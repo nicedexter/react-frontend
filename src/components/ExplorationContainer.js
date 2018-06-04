@@ -18,6 +18,7 @@ const propTypes = {
 type Props = {
   loading: boolean,
   error?: Object,
+  updateModel: Function,
   hierarchy: GroupsType[],
 }
 

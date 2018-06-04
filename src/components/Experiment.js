@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { Panel, Pager, Tabs, Tab } from 'react-bootstrap'
+import { Panel, Pager } from 'react-bootstrap'
 import ExplorationContainer from './ExplorationContainer'
 import ModelContainer from './ModelContainer'
 
@@ -24,35 +24,35 @@ export default () => (
               <Panel.Title toggle>Epidemiological Exploration</Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
-              <Panel.Body>
+              <Panel.Body collapsible>
                 <ExplorationContainer />
               </Panel.Body>
             </Panel.Collapse>
           </Panel>
-          <Panel id="collapsible-analysis" defaultExpanded>
+          <Panel id="collapsible-analysis">
             <Panel.Heading>
               <Panel.Title toggle>Analysis</Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
-              <Panel.Body />
+              <Panel.Body collapsible />
             </Panel.Collapse>
           </Panel>
-          <Panel id="collapsible-experiment" defaultExpanded>
+          <Panel id="collapsible-experiment">
             <Panel.Heading>
               <Panel.Title toggle>Experiment</Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
-              <Panel.Body />
+              <Panel.Body collapsible />
             </Panel.Collapse>
           </Panel>
         </div>
         <div className="box current-model">
-          <Panel id="collapsible-exploration" defaultExpanded>
+          <Panel id="collapsible-model" defaultExpanded>
             <Panel.Heading>
               <Panel.Title toggle>Current Model</Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
-              <Panel.Body>
+              <Panel.Body collapsible>
                 <ModelContainer />
               </Panel.Body>
             </Panel.Collapse>
