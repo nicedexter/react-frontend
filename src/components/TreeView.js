@@ -2,7 +2,7 @@
 
 // Code modified from https://github.com/chenglou/react-treeview
 import React from 'react'
-import { TreeViewProps } from '../../proptypes'
+import { TreeViewProps } from '../proptypes'
 import './TreeView.css'
 
 type Props = TreeViewType

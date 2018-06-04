@@ -5,7 +5,7 @@ import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
 import { allGroupsAndVariables, updateModel } from '../graphql'
-import Hierarchy from './Hierarchy'
+import Exploration from './Exploration'
 
 import { HierarchyProps } from '../proptypes'
 
@@ -42,7 +42,7 @@ class ExplorationContainer extends React.PureComponent<Props> {
 
     return (
       <div>
-        <Hierarchy hierarchy={hierarchy} handleClick={this.handleClick} />
+        <Exploration hierarchy={hierarchy} handleClick={this.handleClick} />
       </div>
     )
   }

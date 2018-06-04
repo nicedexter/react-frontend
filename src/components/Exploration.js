@@ -2,11 +2,11 @@
 
 import React from 'react'
 
-import TreeView from './TreeView/TreeView'
+import TreeView from './TreeView'
 import { HierarchyProps } from '../proptypes'
 import { Glyphicon, Button } from 'react-bootstrap'
 
-import './Hierarchy.css'
+import './Exploration.css'
 
 type Props = {
   hierarchy: GroupsType[],
