@@ -34,7 +34,8 @@ class ModelContainer extends React.PureComponent<Props> {
     try {
       await saveModel({
         variables: {
-          ...currentModel,
+          variables: currentModel.variables.map(v => v.code).join(','),
+          covariables: currentModel.covariables.map(v => v.code).join(','),
         },
       })
       // await resetCurrentModel()

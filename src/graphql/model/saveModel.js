@@ -3,9 +3,7 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  mutation saveModel($variables: [Variable]!) @client {
-    saveModel(variables: $variables) {
-      variables
-    }
+  mutation saveModel($variables: String!, $covariables: String) {
+    saveModel(variables: $variables, covariables: $covariables)
   }
 `
