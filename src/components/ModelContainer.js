@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { getCurrentModel } from '../graphql'
+import { updateModel, getCurrentModel, saveModel } from '../graphql'
 import ModelView from './ModelView'
 import { ModelProps } from '../proptypes'
 
@@ -21,31 +21,27 @@ type Props = {
 }
 
 class ModelContainer extends React.PureComponent<Props> {
-  // createModel = async () => {
-  //   const { createModel, currentModel } = this.props
-  //   try {
-  //     await createModel({
-  //       variables: {
-  //         ...currentModel
-  //       }
-  //     })
-  //     // await resetCurrentModel()
-  //     this.setState({ created: true })
-  //   } catch (error) {
-  //     this.setState({ error })
-  //   }
-  // }
+  constructor(props) {
+    super(props)
+    this.handleSave = this.handleSave.bind(this)
+  }
 
-  handleClick = args => {
-    /*
-    const { updateModel } = this.props
-    updateModel({
-      variables: {
-        index: 'mymodel',
-        variables: args,
-      },
-    })
-    */
+  componentWillUpdate(nextProps) {
+    console.log({ nextProps })
+  }
+  handleSave = async () => {
+    const { saveModel, currentModel } = this.props
+    try {
+      await saveModel({
+        variables: {
+          ...currentModel,
+        },
+      })
+      // await resetCurrentModel()
+      this.setState({ created: true })
+    } catch (error) {
+      this.setState({ error })
+    }
   }
 
   render() {
@@ -56,7 +52,7 @@ class ModelContainer extends React.PureComponent<Props> {
 
     return (
       <div>
-        <ModelView currentModel={currentModel} />
+        <ModelView currentModel={currentModel} handleSave={this.handleSave} />
       </div>
     )
   }
@@ -65,8 +61,8 @@ class ModelContainer extends React.PureComponent<Props> {
 ModelContainer.propTypes = propTypes
 
 export default compose(
-  // graphql(createModel, { name: 'mymodel' }),
-  // graphql(updateModel, { name: 'updateModel' }),
+  graphql(saveModel, { name: 'saveModel' }),
+  graphql(updateModel, { name: 'updateModel' }),
   graphql(getCurrentModel, {
     props: ({ data: { loading, error, currentModel } }) => ({
       loading,

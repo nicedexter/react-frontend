@@ -13,7 +13,7 @@ import { ApolloLink } from 'apollo-link' // flowlint-line untyped-import:off
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import App from './App'
-import { resolvers, defaultState } from './graphql'
+import { resolvers, defaultState, schema } from './graphql'
 import registerServiceWorker from './registerServiceWorker'
 
 import './index.css'
@@ -26,6 +26,7 @@ const stateLink = withClientState({
   cache,
   defaults: defaultState,
   resolvers,
+  schema,
 })
 
 const client = new ApolloClient({

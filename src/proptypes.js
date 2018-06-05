@@ -40,7 +40,8 @@ const HierarchyProps = PropTypes.arrayOf(HierarchyNodeProps)
 const TreeViewProps = {
   collapsed: PropTypes.bool,
   defaultCollapsed: PropTypes.bool,
-  nodeLabel: PropTypes.node.isRequired,
+  nodeTitle: PropTypes.node.isRequired,
+  nodeDescription: PropTypes.node,
   nodeIcon: PropTypes.node,
 }
 

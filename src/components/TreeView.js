@@ -19,17 +19,18 @@ class TreeView extends React.PureComponent<Props, State> {
     }
   }
 
-  handleClick = (args: SyntheticEvent<HTMLButtonElement>) => {
+  handleCollapseClick = (args: SyntheticEvent<HTMLButtonElement>) => {
     this.setState({ collapsed: !this.state.collapsed })
-    if (this.props.onClick) {
-      this.props.onClick(...args)
-    }
+    // if (this.props.onClick) {
+    //   this.props.onClick(...args)
+    // }
   }
 
   render() {
     const {
       collapsed = this.state.collapsed,
-      nodeLabel,
+      nodeTitle,
+      nodeDescription,
       nodeIcon,
       children,
       defaultCollapsed,
@@ -44,14 +45,24 @@ class TreeView extends React.PureComponent<Props, State> {
     }
 
     const arrow = (
-      <div {...rest} className={arrowClassName} onClick={this.handleClick} />
+      <div
+        {...rest}
+        className={arrowClassName}
+        onClick={this.handleCollapseClick}
+      />
+    )
+
+    const title = (
+      <span className="title" onClick={this.handleCollapseClick}>
+        {nodeTitle}
+      </span>
     )
 
     return (
       <div className={'tree-view'}>
-        <div className={'tree-view_item'} onClick={this.handleClick}>
+        <div className={'tree-view_item'}>
           {arrow}
-          {nodeIcon} {nodeLabel}
+          {nodeIcon} {title} {nodeDescription}
         </div>
         <div className={containerClassName}>{collapsed ? null : children}</div>
       </div>

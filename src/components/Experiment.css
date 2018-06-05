@@ -6,7 +6,6 @@
 }
 
 .box {
-
 }
 
 .exploration {
@@ -14,7 +13,12 @@
   grid-row: 1;
 }
 .current-model {
+  width: 250px;
   grid-column: 3;
   grid-row: 1 / 3;
+}
 
+.label {
+  white-space: normal !important;
+  margin: 0.2em 0.3em;
 }

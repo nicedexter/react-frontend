@@ -3,6 +3,7 @@
 import React from 'react'
 
 import TreeView from './TreeView'
+import MiningChart from './MiningChart'
 import { HierarchyProps } from '../proptypes'
 import { Glyphicon, Button } from 'react-bootstrap'
 
@@ -19,14 +20,72 @@ class Hierarchy extends React.PureComponent<Props> {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick = (args: { code: string, isVariable: boolean }) => {
-    this.props.handleClick(args)
+  handleClick = (variable, type) => {
+    this.props.handleClick(variable, type)
   }
+
+  handleGroupClick = (group, type) => {
+    group.variables.forEach(variable => {
+      this.props.handleClick(variable, type)
+    })
+  }
+
+  description = (variable: VariableType) => (
+    <React.Fragment>
+      <p className="item"> 5 subgroups, 56 variables</p>
+      <p className="item">Add to model as</p>
+      <Button
+        onClick={() => this.handleClick(variable, 'variable')}
+        className="item"
+        bsSize="xsmall"
+        active={this.props.currentModel.variables.includes(variable)}
+      >
+        variables{' '}
+      </Button>
+      <Button
+        onClick={() => this.handleClick(variable, 'covariable')}
+        className="item"
+        bsSize="xsmall"
+        active={this.props.currentModel.covariables.includes(variable)}
+      >
+        covariables
+      </Button>
+    </React.Fragment>
+  )
+
+  groupDescription = (group: GroupsType) => (
+    <React.Fragment>
+      <p className="item"> 5 subgroups, 56 variables</p>
+      <p className="item">Add to model as</p>
+      <Button
+        onClick={() => this.handleGroupClick(group, 'variable')}
+        className="item"
+        bsSize="xsmall"
+        active={this.props.currentModel.variables
+          .map(co => co.group.code)
+          .includes(group.code)}
+      >
+        variables{' '}
+      </Button>
+      <Button
+        onClick={() => this.handleGroupClick(group, 'covariable')}
+        className="item"
+        bsSize="xsmall"
+        active={this.props.currentModel.covariables
+          .map(co => co.group.code)
+          .includes(group.code)}
+      >
+        covariables
+      </Button>
+    </React.Fragment>
+  )
+
   groupView = (group: GroupsType, i: number) => (
     <div key={group.code} className="groupContainer">
       <TreeView
         key={group.code + '|' + i}
-        nodeLabel={this.label({ ...group, group, isVariable: false })}
+        nodeDescription={this.groupDescription(group)}
+        nodeTitle={group.label}
         defaultCollapsed={true}
       >
         {group.variables ? this.variableView(group.variables) : null}
@@ -35,50 +94,31 @@ class Hierarchy extends React.PureComponent<Props> {
     </div>
   )
 
-  label = ({ code, label, description, goup, isVariable }: VariableType) => (
-    <React.Fragment>
-      <span className="title">
-        <strong>{label}</strong>
-      </span>
-      <p className="item"> 5 subgroups, 56 variables</p>
-      <p className="item">Add to model as</p>
-      <Button
-        onClick={() => this.handleClick({ code, isVariable, asVariable: true })}
-        className="item"
-        bsSize="xsmall"
-        bsStyle="primary"
-      >
-        variables{' '}
-      </Button>
-      <Button
-        onClick={() => this.handleClick({ code, isVariable })}
-        className="item"
-        bsSize="xsmall"
-        bsStyle="primary"
-      >
-        covariables
-      </Button>
-    </React.Fragment>
-  )
-
   variableView = (variables: VariableType[]) =>
     // $FlowFixMe
     variables.map((variable: VariableType, i: number) => (
       <TreeView
         key={variable.code + '|' + i}
-        nodeLabel={this.label(variable)}
+        nodeTitle={variable.label}
+        nodeDescription={this.description(variable)}
         defaultCollapsed={true}
         nodeIcon={<Glyphicon glyph="signal" />}
       >
         <div className="info">{variable.description}</div>
         <div className="info">type: {variable.type}</div>
         <div className="info">methodology: {variable.methodology}</div>
+        <MiningChart variable={variable} />
       </TreeView>
     ))
 
   render() {
     const { hierarchy }: { hierarchy: GroupsType[] } = this.props
-    return <div>{hierarchy.map(this.groupView)}</div>
+    return (
+      <div>
+        TreeView
+        {hierarchy.map(this.groupView)}
+      </div>
+    )
   }
 }
 

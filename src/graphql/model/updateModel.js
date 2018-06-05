@@ -5,15 +5,15 @@ import gql from 'graphql-tag'
 export default gql`
   mutation updateModel(
     $index: String!
-    $variables: [String]
-    $covariables: [String]
-    $filters: [String]
+    $variable: Variable
+    $covariable: Variable
+    $filter: Variable
   ) {
     updateModel(
       index: $index
-      variables: $variables
-      covariables: $covariables
-      filters: $filters
+      variable: $variable
+      covariable: $covariable
+      filter: $filter
     ) @client {
       variables
       covariables

@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { allGroupsAndVariables, updateModel } from '../graphql'
+import { allGroupsAndVariables, getCurrentModel, updateModel } from '../graphql'
 import Exploration from './Exploration'
 
 import { HierarchyProps } from '../proptypes'
@@ -23,26 +23,30 @@ type Props = {
 }
 
 class ExplorationContainer extends React.PureComponent<Props> {
-  handleClick = ({ code, isGroup, asVariable }) => {
+  handleClick = (variable, type) => {
     const { updateModel } = this.props
-    updateModel({
-      variables: {
-        index: 'mymodel',
-        variables: asVariable ? code : null,
-        covariables: asVariable ? null : code,
-      },
-    })
+    const nextModel = {}
+    if (type === 'variable') {
+      nextModel.variable = variable
+    } else if (type === 'covariable') {
+      nextModel.covariable = variable
+    }
+    updateModel({ variables: nextModel })
   }
 
   render() {
-    const { loading, error, hierarchy } = this.props
+    const { loading, error, hierarchy, currentModel } = this.props
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error {error.message}</p>
 
     return (
       <div>
-        <Exploration hierarchy={hierarchy} handleClick={this.handleClick} />
+        <Exploration
+          hierarchy={hierarchy}
+          currentModel={currentModel}
+          handleClick={this.handleClick}
+        />
       </div>
     )
   }
@@ -59,6 +63,13 @@ const makeHierarchy = (groups: GroupsType[], variables: Array<VariableType>) =>
   }))
 
 export default compose(
+  graphql(getCurrentModel, {
+    props: ({ data: { loading, error, currentModel } }) => ({
+      loading,
+      error,
+      currentModel,
+    }),
+  }),
   graphql(updateModel, { name: 'updateModel' }),
   graphql(allGroupsAndVariables, {
     props: ({ data: { loading, error, variables, groups } }) => {
