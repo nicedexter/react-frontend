@@ -4,13 +4,13 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
-import Experiment from './components/Experiment'
+import ExperimentContainer from './components/ExperimentContainer'
 
 import './App.css'
 
 export default () => (
   <div className="App">
     <Navbar />
-    <Route path="/" exact component={Experiment} />
+    <Route path="/" exact component={ExperimentContainer} />
   </div>
 )

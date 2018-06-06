@@ -1,8 +1,44 @@
-export default `
+
+const typeDefs = `
 type Query {
   variables: [Variable]
   groups: Group
-  mining(variable: String!): MiningResponse
+  histogram(variable: String!): MiningResponse
+  summary(variables: String, grouping: String, covariables: String) : MiningResponse
+  methods: Methods
+}
+
+type Mutation {
+  saveModel(variables: String, covariables: String): String
+}
+
+type ConstraintProp {
+  min_count: Int
+  binominal: Boolean
+  integer: Boolean
+  polynominal: Boolean
+  real: Boolean
+}
+
+type Constraint {
+  covariables: ConstraintProp
+  grouping: ConstraintProp
+  mixed: Boolean
+  variable: ConstraintProp
+}
+
+type Algorithm {
+  code: String!
+  label: String
+  description: String
+  type: [String]
+  constraints: Constraint
+}
+
+type Methods {
+  algorithm: Algorithm
+  metrics: String
+  validations: String
 }
 
 type MiningResponse {
@@ -14,8 +50,12 @@ type MiningResponse {
   data: String
 }
 
+type Code {
+  code: String!
+}
+
 type Element {
-  code: String,
+  code: String
   label: String
 }
 
@@ -25,7 +65,7 @@ type Variable {
   type: String
   sql_type: String
   description: String
-  methodology: String,
+  methodology: String
   enumerations: [Element]
   group: Element
   isVariable: Boolean
@@ -36,5 +76,6 @@ type Group {
   label: String
   groups: [Group]
 }
-
 `
+
+export default typeDefs

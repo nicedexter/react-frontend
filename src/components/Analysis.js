@@ -12,59 +12,32 @@ class Analysis extends React.PureComponent {
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error {error.message}</p>
+    if (!summary || !summary.data) return <p>Nothing to show yet</p>
 
-    console.log(summary)
-    if (summary.summary) return <div>{summary.summary.data}</div>
+    const fields = summary.schema.fields.filter(f => f.type !== 'array').filter(f => f.name !== 'index').filter(f => f.name !== 'top')
+    const columns = fields.map(f => ({
+      Header: f.name,
+      accessor: f.name,
+    }))
 
-    const data = [
-      {
-        name: 'Tanner Linsley',
-        age: 26,
-        friend: {
-          name: 'Jason Maurer',
-          age: 23,
-        },
-      },
-      {
-        name: 'Tanner Linsley',
-        age: 22,
-        friend: {
-          name: 'Jason Maurer',
-          age: 23,
-        },
-      },
-      {
-        name: 'Tanner Linsley',
-        age: 23,
-        friend: {
-          name: 'Jason Maurer',
-          age: 23,
-        },
-      },
-    ]
+    const data = summary.data.map(row => {
+      let o = {}
+      Object.entries(row).forEach((arr) => {
+        o[arr[0]] = arr[1] != null && arr[1].constructor === Object ? JSON.stringify(arr[1]) : arr[1]
+      })
+      return o
+    })
 
-    const columns = [
-      {
-        Header: 'Name',
-        accessor: 'name', // String-based value accessors!
-      },
-      {
-        Header: 'Age',
-        accessor: 'age',
-        Cell: props => <span className="number">{props.value}</span>, // Custom cell components!
-      },
-      {
-        id: 'friendName', // Required because our accessor is not a string
-        Header: 'Friend Name',
-        accessor: d => d.friend.name, // Custom value accessors!
-      },
-      {
-        Header: props => <span>Friend Age</span>, // Custom header components!
-        accessor: 'friend.age',
-      },
-    ]
-
-    return <ReactTable data={data} columns={columns} />
+    return <ReactTable 
+      data={data} 
+      columns={columns}
+      defaultPageSize={data.length}
+      showPagination={false}
+      className="-striped -highlight"
+      style={{
+        width: "100%"
+      }}
+      />
   }
 }
 
@@ -77,18 +50,18 @@ export default compose(
     }),
   }),
   graphql(summary, {
-    name: 'summary',
-    skip: ({ currentModel }) => !currentModel.variables,
+    name: 'getSummary',
+    skip: ({ currentModel }) => currentModel.variables.length === 0,
     options: ({ currentModel }) => ({
       variables: {
         variables: currentModel.variables.map(v => v.code).join(','),
         covariables: currentModel.covariables.map(v => v.code).join(','),
       },
-      props: ({ data: { loading, error, summary } }) => ({
-        loading,
-        error,
-        summary,
-      }),
+    }),
+    props: ({ getSummary: { loading, error, summary } }) => ({
+      loading,
+      error,
+      summary: summary ? JSON.parse(summary.data) : {},
     }),
   })
 )(Analysis)
