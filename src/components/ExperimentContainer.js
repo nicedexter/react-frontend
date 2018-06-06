@@ -36,45 +36,47 @@ class ExperimentController extends React.PureComponent {
 
         <div>
           <div className="wrapper">
-          <PanelGroup
-        accordion
-        id="accordion-controlled-example"
-        activeKey={this.state.activeKey}
-        onSelect={this.handleSelect}
-      >
             <div className="box exploration">
-              <Panel id="collapsible-exploration" eventKey="1">
-                <Panel.Heading>
-                  <Panel.Title toggle>Epidemiological Exploration</Panel.Title>
-                </Panel.Heading>
-                <Panel.Collapse>
-                  <Panel.Body collapsible>
-                    <ExplorationContainer />
-                  </Panel.Body>
-                </Panel.Collapse>
-              </Panel>
-              <Panel id="collapsible-analysis" eventKey="2">
-                <Panel.Heading>
-                  <Panel.Title toggle>Analysis</Panel.Title>
-                </Panel.Heading>
-                <Panel.Collapse>
-                  <Panel.Body collapsible>
-                    <Analysis />
-                  </Panel.Body>
-                </Panel.Collapse>
-              </Panel>
-              <Panel id="collapsible-experiment" eventKey="3">
-                <Panel.Heading>
-                  <Panel.Title toggle>Experiment</Panel.Title>
-                </Panel.Heading>
-                <Panel.Collapse>
-                  <Panel.Body collapsible>
-                    <Experiment />
-                  </Panel.Body>
-                </Panel.Collapse>
-              </Panel>
+              <PanelGroup
+                accordion
+                id="accordion-controlled-example"
+                activeKey={this.state.activeKey}
+                onSelect={this.handleSelect}
+              >
+                <Panel id="collapsible-exploration" eventKey="1">
+                  <Panel.Heading>
+                    <Panel.Title toggle>
+                      Epidemiological Exploration
+                    </Panel.Title>
+                  </Panel.Heading>
+                  <Panel.Collapse>
+                    <Panel.Body collapsible>
+                      <ExplorationContainer />
+                    </Panel.Body>
+                  </Panel.Collapse>
+                </Panel>
+                <Panel id="collapsible-analysis" eventKey="2">
+                  <Panel.Heading>
+                    <Panel.Title toggle>Analysis</Panel.Title>
+                  </Panel.Heading>
+                  <Panel.Collapse>
+                    <Panel.Body collapsible>
+                      <Analysis />
+                    </Panel.Body>
+                  </Panel.Collapse>
+                </Panel>
+                <Panel id="collapsible-experiment" eventKey="3">
+                  <Panel.Heading>
+                    <Panel.Title toggle>Experiment</Panel.Title>
+                  </Panel.Heading>
+                  <Panel.Collapse>
+                    <Panel.Body collapsible>
+                      <Experiment />
+                    </Panel.Body>
+                  </Panel.Collapse>
+                </Panel>
+              </PanelGroup>
             </div>
-            </PanelGroup>
             <div className="box current-model">
               <Panel id="collapsible-model" defaultExpanded>
                 <Panel.Heading>
