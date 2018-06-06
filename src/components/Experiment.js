@@ -4,6 +4,7 @@ import React from 'react'
 import { Panel, Pager } from 'react-bootstrap'
 import ExplorationContainer from './ExplorationContainer'
 import ModelContainer from './ModelContainer'
+import Analysis from './Analysis'
 
 import './Experiment.css'
 
@@ -29,12 +30,14 @@ export default () => (
               </Panel.Body>
             </Panel.Collapse>
           </Panel>
-          <Panel id="collapsible-analysis">
+          <Panel id="collapsible-analysis" defaultExpanded>
             <Panel.Heading>
               <Panel.Title toggle>Analysis</Panel.Title>
             </Panel.Heading>
             <Panel.Collapse>
-              <Panel.Body collapsible />
+              <Panel.Body collapsible>
+                <Analysis />
+              </Panel.Body>
             </Panel.Collapse>
           </Panel>
           <Panel id="collapsible-experiment">

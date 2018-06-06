@@ -3,8 +3,8 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  query Mining($variable: String!) {
-    mining(variable: $variable) {
+  query Histogram($variable: String!) {
+    histogram(variable: $variable) {
       jobId
       node
       function

@@ -6,7 +6,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { Tabs, Tab, Panel } from 'react-bootstrap'
 
-import { mining } from '../graphql'
+import { histogram } from '../graphql'
 
 type Props = {
   model: VariableType,
@@ -38,11 +38,11 @@ class Chart extends React.PureComponent<Props> {
 
     return (
       <div>
-        <Query query={mining} variables={{ variable: variable.code }}>
+        <Query query={histogram} variables={{ variable: variable.code }}>
           {({ loading, error, data }) => {
             const json =
-              data && data.mining && data.mining.data
-                ? JSON.parse(data.mining.data)
+              data && data.histogram && data.histogram.data
+                ? JSON.parse(data.histogram.data)
                 : null
             return (
               <Panel id="panel" defaultExpanded>
