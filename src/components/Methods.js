@@ -1,16 +1,11 @@
 import React from 'react'
 
-import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap'
-
-import { graphql, compose } from 'react-apollo'
-import { getMethods } from '../graphql'
+import { Button } from 'react-bootstrap'
 
 class Methods extends React.PureComponent {
   render() {
-    const { loading, error, methods } = this.props
-
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error {error.message}</p>
+    const { methods, handleClick } = this.props
+    if (!methods) return <div />
 
     const statistics = methods.algorithms.filter(a =>
       a.type.includes('statistics')
@@ -25,35 +20,41 @@ class Methods extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <Panel>
-          <Panel.Heading>Statistics</Panel.Heading>
-          <ListGroup>
-            {statistics.map(a => <ListGroupItem>{a.label}</ListGroupItem>)}
-          </ListGroup>
-        </Panel>
-        <Panel>
-          <Panel.Heading>Extraction</Panel.Heading>
-        <ListGroup>
-          {extraction.map(a => <ListGroupItem>{a.label}</ListGroupItem>)}
-        </ListGroup>
-        </Panel>
-        <Panel>
-          <Panel.Heading>Predictive</Panel.Heading>
-        <ListGroup>
-          {predictive.map(a => <ListGroupItem>{a.label}</ListGroupItem>)}
-        </ListGroup>
-        </Panel>
+        <h4>Statistics</h4>
+        {statistics.map(method => (
+          <Button
+            onClick={ev => handleClick(method, ev)}
+            key={method.code}
+            bsSize="xsmall"
+          >
+            {method.label}
+          </Button>
+        ))}
+
+        <h4>Extraction</h4>
+        {extraction.map(method => (
+          <Button
+            onClick={ev => handleClick(method, ev)}
+            key={method.code}
+            bsSize="xsmall"
+          >
+            {method.label}
+          </Button>
+        ))}
+
+        <h4>Predictive</h4>
+        {predictive.map(method => (
+          <Button
+            onClick={ev => handleClick(method, ev)}
+            key={method.code}
+            bsSize="xsmall"
+          >
+            {method.label}
+          </Button>
+        ))}
       </React.Fragment>
     )
   }
 }
 
-export default compose(
-  graphql(getMethods, {
-    props: ({ data: { loading, error, methods } }) => ({
-      loading,
-      error,
-      methods,
-    }),
-  })
-)(Methods)
+export default Methods

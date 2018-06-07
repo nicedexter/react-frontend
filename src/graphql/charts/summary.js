@@ -4,10 +4,12 @@ import gql from 'graphql-tag'
 
 export default gql`
   query Summary($variables: String!, $covariables: String, $grouping: String) {
-    summary(
+    mining(
       variables: $variables
       covariables: $covariables
       grouping: $grouping
+      datasets: "desd-synthdata"
+      algorithm: "statisticsSummary"
     ) {
       jobId
       node

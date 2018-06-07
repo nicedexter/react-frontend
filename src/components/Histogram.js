@@ -13,7 +13,7 @@ type Props = {
 }
 
 class Chart extends React.PureComponent<Props> {
-  state = { variable: null }
+  state = { variables: null }
 
   constructor(props) {
     super(props)
@@ -22,7 +22,7 @@ class Chart extends React.PureComponent<Props> {
 
   chartTitle = previousTitle => {
     const nextTitle = previousTitle.replace(
-      `${this.state.variable.label} histogram`,
+      `${this.state.variables.label} histogram`,
       ''
     )
     if (nextTitle.length === 0) {
@@ -32,30 +32,30 @@ class Chart extends React.PureComponent<Props> {
   }
 
   render() {
-    const { variable } = this.state
+    const { variables } = this.state
 
-    if (!variable) return <div />
+    if (!variables) return <div />
 
     return (
       <div>
-        <Query query={histogram} variables={{ variable: variable.code }}>
+        <Query query={histogram} variables={{ variables: variables.code }}>
           {({ loading, error, data }) => {
             const json =
-              data && data.histogram && data.histogram.data
-                ? JSON.parse(data.histogram.data)
+              data && data.mining && data.mining.data
+                ? JSON.parse(data.mining.data)
                 : null
+
             return (
-              <Panel id="panel" defaultExpanded>
+              <Panel id="histogram-panel">
                 <Panel.Heading>
-                  <Panel.Title toggle>
-                    {variable.label} {loading && 'loading...'}{' '}
+                  <Panel.Title>
+                    {variables.label} {loading && 'loading...'}{' '}
                     {error && `${error}`}
                   </Panel.Title>
                 </Panel.Heading>
 
                 {json && (
-                  <Panel.Collapse>
-                    <Panel.Body collapsible>
+                    <Panel.Body>
                       <Tabs defaultActiveKey={0} id="highcharts-tabs">
                         {json.map((chart, i) => (
                           <Tab
@@ -71,8 +71,8 @@ class Chart extends React.PureComponent<Props> {
                         ))}
                       </Tabs>
                     </Panel.Body>
-                  </Panel.Collapse>
                 )}
+                {error && <Panel.Body>`${error}`</Panel.Body>}
               </Panel>
             )
           }}

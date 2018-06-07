@@ -8,19 +8,19 @@ import 'react-table/react-table.css'
 
 class Analysis extends React.PureComponent {
   render() {
-    const { loading, error, currentModel, summary } = this.props
+    const { loading, error, mining } = this.props
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error {error.message}</p>
-    if (!summary || !summary.data) return <p>Nothing to show yet</p>
+    if (!mining || !mining.data) return <p>Nothing to show yet</p>
 
-    const fields = summary.schema.fields.filter(f => f.type !== 'array').filter(f => f.name !== 'index').filter(f => f.name !== 'top')
+    const fields = mining.schema.fields.filter(f => f.type !== 'array').filter(f => f.name !== 'index').filter(f => f.name !== 'top')
     const columns = fields.map(f => ({
       Header: f.name,
       accessor: f.name,
     }))
 
-    const data = summary.data.map(row => {
+    const data = mining.data.map(row => {
       let o = {}
       Object.entries(row).forEach((arr) => {
         o[arr[0]] = arr[1] != null && arr[1].constructor === Object ? JSON.stringify(arr[1]) : arr[1]
@@ -58,10 +58,10 @@ export default compose(
         covariables: currentModel.covariables.map(v => v.code).join(','),
       },
     }),
-    props: ({ getSummary: { loading, error, summary } }) => ({
+    props: ({ getSummary: { loading, error, mining } }) => ({
       loading,
       error,
-      summary: summary ? JSON.parse(summary.data) : {},
+      mining: mining ? JSON.parse(mining.data) : {},
     }),
   })
 )(Analysis)

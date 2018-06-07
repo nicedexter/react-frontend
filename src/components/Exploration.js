@@ -3,7 +3,7 @@
 import React from 'react'
 
 import TreeView from './TreeView'
-import Histogram from './HistogramChart'
+import Histogram from './Histogram'
 import { HierarchyProps } from '../proptypes'
 import { Glyphicon, Button } from 'react-bootstrap'
 
@@ -107,7 +107,7 @@ class Hierarchy extends React.PureComponent<Props> {
         <div className="info">{variable.description}</div>
         <div className="info">type: {variable.type}</div>
         <div className="info">methodology: {variable.methodology}</div>
-        <Histogram variable={variable} />
+        <Histogram variables={variable} />
       </TreeView>
     ))
 

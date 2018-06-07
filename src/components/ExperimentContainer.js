@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { Panel, PanelGroup, Pager } from 'react-bootstrap'
+import { Panel, Pager } from 'react-bootstrap'
 import ExplorationContainer from './ExplorationContainer'
 import ModelContainer from './ModelContainer'
 import Analysis from './Analysis'
@@ -37,53 +37,44 @@ class ExperimentController extends React.PureComponent {
         <div>
           <div className="wrapper">
             <div className="box exploration">
-              <PanelGroup
-                accordion
-                id="accordion-controlled-example"
-                activeKey={this.state.activeKey}
-                onSelect={this.handleSelect}
-              >
-                <Panel id="collapsible-exploration" eventKey="1">
-                  <Panel.Heading>
-                    <Panel.Title toggle>
-                      Epidemiological Exploration
-                    </Panel.Title>
-                  </Panel.Heading>
-                  <Panel.Collapse>
-                    <Panel.Body collapsible>
-                      <ExplorationContainer />
-                    </Panel.Body>
-                  </Panel.Collapse>
-                </Panel>
-                <Panel id="collapsible-analysis" eventKey="2">
-                  <Panel.Heading>
-                    <Panel.Title toggle>Analysis</Panel.Title>
-                  </Panel.Heading>
-                  <Panel.Collapse>
-                    <Panel.Body collapsible>
-                      <Analysis />
-                    </Panel.Body>
-                  </Panel.Collapse>
-                </Panel>
-                <Panel id="collapsible-experiment" eventKey="3">
-                  <Panel.Heading>
-                    <Panel.Title toggle>Experiment</Panel.Title>
-                  </Panel.Heading>
-                  <Panel.Collapse>
-                    <Panel.Body collapsible>
-                      <Experiment />
-                    </Panel.Body>
-                  </Panel.Collapse>
-                </Panel>
-              </PanelGroup>
-            </div>
-            <div className="box current-model">
-              <Panel id="collapsible-model" defaultExpanded>
+              <Panel id="panel-exploration" defaultExpanded>
                 <Panel.Heading>
-                  <Panel.Title toggle>Current Model</Panel.Title>
+                  <Panel.Title toggle>Epidemiological Exploration</Panel.Title>
                 </Panel.Heading>
                 <Panel.Collapse>
                   <Panel.Body collapsible>
+                    <ExplorationContainer />
+                  </Panel.Body>
+                </Panel.Collapse>
+              </Panel>
+              <Panel id="panel-analysis" defaultExpanded>
+                <Panel.Heading>
+                  <Panel.Title toggle>Analysis</Panel.Title>
+                </Panel.Heading>
+                <Panel.Collapse>
+                  <Panel.Body collapsible>
+                    <Analysis />
+                  </Panel.Body>
+                </Panel.Collapse>
+              </Panel>
+              <Panel id="panel-experiment" eventKey="3">
+                <Panel.Heading>
+                  <Panel.Title toggle>Experiment</Panel.Title>
+                </Panel.Heading>
+                <Panel.Collapse>
+                  <Panel.Body collapsible>
+                    <Experiment />
+                  </Panel.Body>
+                </Panel.Collapse>
+              </Panel>
+            </div>
+            <div className="box current-model">
+              <Panel id="panel-model" defaultExpanded>
+                <Panel.Heading>
+                  <Panel.Title>Current Model</Panel.Title>
+                </Panel.Heading>
+                <Panel.Collapse>
+                  <Panel.Body>
                     <ModelContainer />
                   </Panel.Body>
                 </Panel.Collapse>
