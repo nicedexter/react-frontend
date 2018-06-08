@@ -26,9 +26,6 @@ class ModelContainer extends React.PureComponent<Props> {
     this.handleSave = this.handleSave.bind(this)
   }
 
-  componentWillUpdate(nextProps) {
-    console.log({ nextProps })
-  }
   handleSave = async () => {
     const { saveModel, currentModel } = this.props
     try {

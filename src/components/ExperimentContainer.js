@@ -6,6 +6,7 @@ import ExplorationContainer from './ExplorationContainer'
 import ModelContainer from './ModelContainer'
 import Analysis from './Analysis'
 import Experiment from './Experiment'
+import Results from './Results'
 
 import './ExperimentContainer.css'
 
@@ -64,6 +65,16 @@ class ExperimentController extends React.PureComponent {
                 <Panel.Collapse>
                   <Panel.Body collapsible>
                     <Experiment />
+                  </Panel.Body>
+                </Panel.Collapse>
+              </Panel>
+              <Panel id="panel-results" eventKey="4" defaultExpanded>
+                <Panel.Heading>
+                  <Panel.Title toggle>Results</Panel.Title>
+                </Panel.Heading>
+                <Panel.Collapse>
+                  <Panel.Body collapsible>
+                    <Results />
                   </Panel.Body>
                 </Panel.Collapse>
               </Panel>
