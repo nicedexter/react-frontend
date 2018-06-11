@@ -1,18 +1,53 @@
-
 const typeDefs = `
-type Query {
+type ModelQuery {
   variables: [Variable]
-  groups: Group
-  histogram(variable: String!): MiningResponse
-  summary(variables: String, grouping: String, covariables: String) : MiningResponse
-  methods: Methods
+  coVariables: [Variable] # FIXME: covariables
+  filters: String # FIXME: as JSON?
+  groupings: [Variable] # FIXME: as covariable
+  testingDatasets: [Variable]
+  trainingDatasets: [Variable]
+  validationDatasets: [Variable]
 }
 
-type Mutation {
-  saveModel(variables: String, covariables: String): String
+type Model {
+  query: ModelQuery
+  createdAt: String
+  updatedAt: String
+  description: String
+  slug: String
+  title: String
+  valid: Boolean
 }
 
-type ConstraintProp {
+type ExperimentResponse {
+  uuid: String
+  name: String
+  result: String
+}
+
+type ExperimentParameter { # FIXME: ~ same as Parameter
+  code: String
+  value: String
+}
+
+type ExperimentAlgorithm { # FIXME: should be same type as in  mining?
+  validation: Boolean
+  code: String
+  name: String
+  parameters: [ExperimentParameter]
+} 
+
+type RunExperimentResponse {
+  uuid: String
+  name: String
+  hasError: Boolean
+  hasServerError: Boolean
+  shared: Boolean
+  resultsViewed: Boolean
+  algorithms: [ExperimentAlgorithm]
+}
+
+type AlgorithmConstraintProp {
   min_count: Int
   binominal: Boolean
   integer: Boolean
@@ -20,11 +55,11 @@ type ConstraintProp {
   real: Boolean
 }
 
-type Constraint {
-  covariables: ConstraintProp
-  grouping: ConstraintProp
+type AlgorithmConstraint {
+  covariables: AlgorithmConstraintProp
+  grouping: AlgorithmConstraintProp
+  variable: AlgorithmConstraintProp #FIXME: variables ?
   mixed: Boolean
-  variable: ConstraintProp
 }
 
 type Algorithm {
@@ -32,13 +67,49 @@ type Algorithm {
   label: String
   description: String
   type: [String]
+  docker_image: String
+  environment: String
+  constraints: AlgorithmConstraint
+  parameters: [Parameter]
+}
+
+type Metric {
+  code: String
+  label: String
+  tooltip: String
+  type: String
+}
+
+type Metrics {
+  binominal_classification: [Metric]
+  classification: [Metric]
+  regression: [Metric]
+}
+
+type Constraint {
+  min: String
+  max: String
+}
+
+type Parameter {
+  code: String
+  label: String
+  description: String
+  default_value: String
+  type: String
   constraints: Constraint
 }
 
+type Validation {
+  code: String
+  label: String
+  parameters: [Parameter]
+}
+
 type Methods {
-  algorithm: Algorithm
-  metrics: String
-  validations: String
+  algorithms: [Algorithm]
+  metrics: Metrics
+  validations: [Validation]
 }
 
 type MiningResponse {
@@ -47,7 +118,7 @@ type MiningResponse {
   function: String
   shape: String
   timestamp: String
-  data: String
+  data: String # FIXME: or not, stringified json for now
 }
 
 type Code {

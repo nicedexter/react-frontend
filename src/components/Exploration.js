@@ -30,6 +30,42 @@ class Hierarchy extends React.PureComponent<Props> {
     })
   }
 
+  includesVariable = variable => {
+    const {
+      currentModel: {
+        query: { variables },
+      },
+    } = this.props
+    return variables.map(v => v.code).includes(variable)
+  }
+
+  includesCovariable = variable => {
+    const {
+      currentModel: {
+        query: { coVariables },
+      },
+    } = this.props
+    return coVariables.map(v => v.code).includes(variable)
+  }
+
+  includesVariablesInGroup = code => {
+    const {
+      currentModel: {
+        query: { variables },
+      },
+    } = this.props
+    return variables.map(v => v.group.code).includes(code)
+  }
+
+  includesCovariablesInGroup = code => {
+    const {
+      currentModel: {
+        query: { coVariables },
+      },
+    } = this.props
+    return coVariables.map(v => v.group.code).includes(code)
+  }
+
   description = (variable: VariableType) => (
     <React.Fragment>
       <p className="item"> 5 subgroups, 56 variables</p>
@@ -38,7 +74,7 @@ class Hierarchy extends React.PureComponent<Props> {
         onClick={() => this.handleClick(variable, 'variable')}
         className="item"
         bsSize="xsmall"
-        active={this.props.currentModel.variables.includes(variable)}
+        active={this.includesVariable(variable)}
       >
         variables{' '}
       </Button>
@@ -46,7 +82,7 @@ class Hierarchy extends React.PureComponent<Props> {
         onClick={() => this.handleClick(variable, 'covariable')}
         className="item"
         bsSize="xsmall"
-        active={this.props.currentModel.covariables.includes(variable)}
+        active={this.includesCovariable(variable)}
       >
         covariables
       </Button>
@@ -61,9 +97,7 @@ class Hierarchy extends React.PureComponent<Props> {
         onClick={() => this.handleGroupClick(group, 'variable')}
         className="item"
         bsSize="xsmall"
-        active={this.props.currentModel.variables
-          .map(co => co.group.code)
-          .includes(group.code)}
+        active={this.includesVariablesInGroup(group.code)}
       >
         variables{' '}
       </Button>
@@ -71,9 +105,7 @@ class Hierarchy extends React.PureComponent<Props> {
         onClick={() => this.handleGroupClick(group, 'covariable')}
         className="item"
         bsSize="xsmall"
-        active={this.props.currentModel.covariables
-          .map(co => co.group.code)
-          .includes(group.code)}
+        active={this.includesCovariablesInGroup(group.code)}
       >
         covariables
       </Button>

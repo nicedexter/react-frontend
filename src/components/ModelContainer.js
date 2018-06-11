@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { updateModel, getCurrentModel, saveModel } from '../graphql'
+import { updateModel, getCurrentModel, allModels, saveModel } from '../graphql'
 import ModelView from './ModelView'
 import { ModelProps } from '../proptypes'
 
@@ -20,9 +20,10 @@ type Props = {
   currentModel: ModelType,
 }
 
-class ModelContainer extends React.PureComponent<Props> {
+class ModelContainer extends React.Component<Props> {
   constructor(props) {
     super(props)
+    this.state = { currentModel: {} }
     this.handleSave = this.handleSave.bind(this)
   }
 
@@ -42,15 +43,32 @@ class ModelContainer extends React.PureComponent<Props> {
     }
   }
 
+  handleSelect = eventKey => {
+    console.log(eventKey)
+    const { allModels } = this.props
+    this.setState({ currentModel: allModels[eventKey] })
+  }
+
+  componentWillReceiveProps(props) {
+    const { currentModel } = props
+    this.setState({ currentModel })
+  }
+
   render() {
-    const { loading, error, currentModel } = this.props
+    const { loading, error, allModels } = this.props
+    const { currentModel } = this.state
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error {error.message}</p>
 
     return (
       <div>
-        <ModelView currentModel={currentModel} handleSave={this.handleSave} />
+        <ModelView
+          allModels={allModels}
+          currentModel={currentModel}
+          handleSave={this.handleSave}
+          handleSelect={this.handleSelect}
+        />
       </div>
     )
   }
@@ -66,6 +84,13 @@ export default compose(
       loading,
       error,
       currentModel,
+    }),
+  }),
+  graphql(allModels, {
+    props: ({ data: { loading, error, allModels } }) => ({
+      loading,
+      error,
+      allModels,
     }),
   })
 )(ModelContainer)

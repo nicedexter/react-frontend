@@ -15,9 +15,11 @@ export default gql`
       covariable: $covariable
       filter: $filter
     ) @client {
-      variables
-      covariables
-      filters
+      query {
+        variables
+        covariables
+        filters
+      }
     }
   }
 `

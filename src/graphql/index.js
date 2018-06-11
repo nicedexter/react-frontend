@@ -1,7 +1,7 @@
 // @flow
 
-export { default as defaultState } from './defaultState'
-export { default as resolvers } from './resolvers'
+export { default as defaultState } from './model/defaultState'
+export { default as resolvers } from './model/resolvers'
 export { default as schema } from './schema'
 
 export { default as allGroupsAndVariables } from './allGroupsAndVariables'
