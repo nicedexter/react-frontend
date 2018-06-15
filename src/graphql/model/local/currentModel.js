@@ -3,33 +3,43 @@
 import gql from 'graphql-tag'
 
 export default gql`
+  fragment VariableParts on Variable {
+    code
+    label
+    type
+    sql_type
+    description
+    methodology
+    group {
+      code
+      label
+    }
+    isVariable
+  }
+
   query {
     currentModel @client {
-      query {
-        variables {
-          code
-        }
-        coVariables {
-          code
-        }
-        groupings {
-          code
-        }
-        filters
-        testingDatasets {
-          code
-        }
-        trainingDatasets {
-          code
-        }
-        validationDatasets {
-          code
-        }
-      }
       title
       slug
-      description
-      valid
+      variables {
+        ...VariableParts
+      }
+      covariables {
+        ...VariableParts
+      }
+      groupings {
+        ...VariableParts
+      }
+      filters
+      testingDatasets {
+        ...VariableParts
+      }
+      trainingDatasets {
+        ...VariableParts
+      }
+      validationDatasets {
+        ...VariableParts
+      }
     }
   }
 `
