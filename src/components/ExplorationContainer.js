@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { allGroupsAndVariables, getCurrentModel, updateModel } from '../graphql'
+import { groupsAndVariables, currentModel, updateModel } from '../graphql'
 import Exploration from './Exploration'
 
 import { HierarchyProps } from '../proptypes'
@@ -63,7 +63,7 @@ const makeHierarchy = (groups: GroupsType[], variables: Array<VariableType>) =>
   }))
 
 export default compose(
-  graphql(getCurrentModel, {
+  graphql(currentModel, {
     props: ({ data: { loading, error, currentModel } }) => ({
       loading,
       error,
@@ -71,7 +71,7 @@ export default compose(
     }),
   }),
   graphql(updateModel, { name: 'updateModel' }),
-  graphql(allGroupsAndVariables, {
+  graphql(groupsAndVariables, {
     props: ({ data: { loading, error, variables, groups } }) => {
       const hierarchy =
         variables.length && groups

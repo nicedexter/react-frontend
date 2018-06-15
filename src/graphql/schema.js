@@ -1,12 +1,75 @@
 const typeDefs = `
-type ModelQuery {
+type Query {
   variables: [Variable]
-  coVariables: [Variable] # FIXME: covariables
-  filters: String # FIXME: as JSON?
-  groupings: [Variable] # FIXME: as covariable
-  testingDatasets: [Variable]
-  trainingDatasets: [Variable]
-  validationDatasets: [Variable]
+  groups: Group
+  mining(variables: String, covariables: String, grouping: String, datasets: String, algorithm: String) : Mining
+  methods: Methods
+  experiments: [Experiment]
+  experiment(uuid: String): Experiment 
+  models: [Model]
+ }
+
+type Mutation {
+  saveModel(
+    title: String
+    variables: [VariableInput!]!
+    coVariables: [VariableInput]
+    groupings: [VariableInput]
+    trainingDatasets: [VariableInput]
+    testingDatasets: [VariableInput]
+    validationDatasets: [VariableInput]
+  ): Model
+  runExperiment(name: String, model: String, algorithms: String, datasets: String): Experiment
+}
+
+# Types
+
+type Variable {
+  code: String!
+  label: String
+  type: String
+  sql_type: String
+  description: String
+  methodology: String
+  enumerations: [Element]
+  group: Element
+  isVariable: Boolean
+}
+
+type Group {
+  code: String!
+  label: String
+  groups: [Group]
+}
+
+type Mining {
+  jobId: String
+  node: String
+  function: String
+  shape: String
+  timestamp: String
+  data: String # FIXME: or not, stringified json for now
+}
+
+type Methods {
+  algorithms: [Algorithm]
+  metrics: Metrics
+  validations: [Validation]
+}
+
+type Experiment {
+  uuid: String
+  name: String
+  result: String
+  hasError: Boolean
+  hasServerError: Boolean
+  shared: Boolean
+  resultsViewed: Boolean
+#  algorithms: [Algorithm]
+#  validations: [String]
+  model: Model
+  created: String
+  finished: String
 }
 
 type Model {
@@ -19,32 +82,51 @@ type Model {
   valid: Boolean
 }
 
-type ExperimentResponse {
-  uuid: String
+type Algorithm {
+  code: String!
+  label: String
   name: String
-  result: String
+  description: String
+  type: [String]
+  docker_image: String
+  environment: String
+  constraints: AlgorithmConstraint
+  parameters: [Parameter]
+  validation: [Validation]
 }
 
-type ExperimentParameter { # FIXME: ~ same as Parameter
+type Parameter {
+  code: String!
+  label: String
+  value: String
+  description: String
+  default_value: String
+  type: String
+  constraints: Constraint
+}
+
+type ModelQuery {
+  variables: [Variable]
+  coVariables: [Variable] # FIXME: covariables
+  filters: String # FIXME: as JSON?
+  groupings: [Variable] # FIXME: as covariable
+  testingDatasets: [Variable]
+  trainingDatasets: [Variable]
+  validationDatasets: [Variable]
+}
+
+type ExperimentParameter {
   code: String
   value: String
 }
 
-type ExperimentAlgorithm { # FIXME: should be same type as in  mining?
-  validation: Boolean
-  code: String
-  name: String
-  parameters: [ExperimentParameter]
-} 
-
-type RunExperimentResponse {
-  uuid: String
-  name: String
-  hasError: Boolean
-  hasServerError: Boolean
-  shared: Boolean
-  resultsViewed: Boolean
-  algorithms: [ExperimentAlgorithm]
+type MethodParameter {
+  code: String!
+  label: String
+  description: String
+  default_value: String
+  type: String
+  constraints: Constraint
 }
 
 type AlgorithmConstraintProp {
@@ -62,19 +144,8 @@ type AlgorithmConstraint {
   mixed: Boolean
 }
 
-type Algorithm {
-  code: String!
-  label: String
-  description: String
-  type: [String]
-  docker_image: String
-  environment: String
-  constraints: AlgorithmConstraint
-  parameters: [Parameter]
-}
-
 type Metric {
-  code: String
+  code: String!
   label: String
   tooltip: String
   type: String
@@ -91,13 +162,9 @@ type Constraint {
   max: String
 }
 
-type Parameter {
+type Element {
   code: String
   label: String
-  description: String
-  default_value: String
-  type: String
-  constraints: Constraint
 }
 
 type Validation {
@@ -106,46 +173,10 @@ type Validation {
   parameters: [Parameter]
 }
 
-type Methods {
-  algorithms: [Algorithm]
-  metrics: Metrics
-  validations: [Validation]
-}
+# Input types
 
-type MiningResponse {
-  jobId: String
-  node: String
-  function: String
-  shape: String
-  timestamp: String
-  data: String # FIXME: or not, stringified json for now
-}
-
-type Code {
-  code: String!
-}
-
-type Element {
+input VariableInput {
   code: String
-  label: String
-}
-
-type Variable {
-  code: String
-  label: String
-  type: String
-  sql_type: String
-  description: String
-  methodology: String
-  enumerations: [Element]
-  group: Element
-  isVariable: Boolean
-}
-
-type Group {
-  code: String
-  label: String
-  groups: [Group]
 }
 `
 

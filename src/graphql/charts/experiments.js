@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 
 export default gql`
   {
-    getExperiments {
+    experiments {
       name
       result
       uuid

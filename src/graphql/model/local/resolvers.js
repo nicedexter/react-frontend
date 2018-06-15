@@ -1,7 +1,7 @@
 // @flow
 
 import gql from 'graphql-tag'
-import getCurrentModel from './getCurrentModel'
+import currentModel from './currentModel'
 
 export default {
   Mutation: {
@@ -10,26 +10,15 @@ export default {
       { index, variable, covariable, filter },
       { cache }: { cache: any }
     ) => {
-      const previous = cache.readQuery({ getCurrentModel })
-      const currentModel = {
-        ...previous.currentModel,
-      }
+      const previous = cache.readQuery({ query: currentModel })
+      const currentModel = previous.currentModel
 
       if (variable) {
-        const previousVariables = previous.currentModel.query.variables.map(
-          v => v.code
-        )
-        if (
-          !previousVariables.includes(variable) &&
-          previousVariables.length < 1
-        ) {
-          currentModel.query.variables = previousVariables.concat({
-            code: variable,
-          })
+        const previousVariables = previous.currentModel.variables
+        if (!previousVariables.includes(variable)) {
+          currentModel.variables = previousVariables.push(variable)
         } else {
-          currentModel.query.variables = previousVariables.filter(
-            v => v !== variable
-          )
+          currentModel.variables = previousVariables.filter(v => v !== variable)
         }
       }
 
@@ -55,9 +44,7 @@ export default {
       //   }
       // }
 
-      const data = { currentModel }
-
-      cache.writeQuery({ getCurrentModel, data })
+      cache.writeQuery({ currentModel, data: currentModel })
     },
     // resetCurrentModel: (_, d, { cache }) => {
     //   cache.writeData({ data: defaultState })

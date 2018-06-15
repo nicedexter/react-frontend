@@ -8,7 +8,7 @@ import Analysis from './Analysis'
 import Experiment from './Experiment'
 import Results from './Results'
 
-import './ExperimentContainer.css'
+import './Main.css'
 
 class ExperimentController extends React.PureComponent {
   constructor(props, context) {
@@ -48,7 +48,7 @@ class ExperimentController extends React.PureComponent {
                   </Panel.Body>
                 </Panel.Collapse>
               </Panel>
-              <Panel id="panel-analysis" defaultExpanded>
+              {/* <Panel id="panel-analysis" defaultExpanded>
                 <Panel.Heading>
                   <Panel.Title toggle>Analysis</Panel.Title>
                 </Panel.Heading>
@@ -77,7 +77,7 @@ class ExperimentController extends React.PureComponent {
                     <Results />
                   </Panel.Body>
                 </Panel.Collapse>
-              </Panel>
+              </Panel> */}
             </div>
             <div className="box current-model">
               <Panel id="panel-model" defaultExpanded>

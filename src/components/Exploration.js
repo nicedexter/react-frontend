@@ -32,9 +32,7 @@ class Hierarchy extends React.PureComponent<Props> {
 
   includesVariable = variable => {
     const {
-      currentModel: {
-        query: { variables },
-      },
+      currentModel: { variables },
     } = this.props
     return variables.map(v => v.code).includes(variable)
   }
@@ -50,20 +48,17 @@ class Hierarchy extends React.PureComponent<Props> {
 
   includesVariablesInGroup = code => {
     const {
-      currentModel: {
-        query: { variables },
-      },
+      currentModel: { variables },
     } = this.props
-    return variables.map(v => v.group.code).includes(code)
+
+    return variables.map(v => v.group && v.group.code).includes(code)
   }
 
   includesCovariablesInGroup = code => {
     const {
-      currentModel: {
-        query: { coVariables },
-      },
+      currentModel: { coVariables },
     } = this.props
-    return coVariables.map(v => v.group.code).includes(code)
+    return coVariables.map(v => v.group && v.group.code).includes(code)
   }
 
   description = (variable: VariableType) => (

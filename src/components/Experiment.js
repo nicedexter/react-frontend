@@ -4,7 +4,7 @@ import { Panel, Button } from 'react-bootstrap'
 
 import Methods from './Methods'
 import { graphql, compose } from 'react-apollo'
-import { getCurrentModel, getMethods, runExperiments } from '../graphql'
+import { currentModel, methods, runExperiments } from '../graphql'
 
 import './Experiment.css'
 class Experiment extends React.Component {
@@ -128,14 +128,14 @@ class Experiment extends React.Component {
 
 export default compose(
   graphql(runExperiments, { name: 'runExperiments' }),
-  graphql(getCurrentModel, {
+  graphql(currentModel, {
     props: ({ data: { loading, error, currentModel } }) => ({
       loading,
       error,
       currentModel,
     }),
   }),
-  graphql(getMethods, {
+  graphql(methods, {
     props: ({ data: { loading, error, methods } }) => ({
       loading,
       error,

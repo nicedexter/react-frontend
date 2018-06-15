@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { graphql, compose } from 'react-apollo'
-import { getCurrentModel, summary } from '../graphql'
+import { currentModel, summary } from '../graphql'
 
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
@@ -50,7 +50,7 @@ class Analysis extends React.PureComponent {
 }
 
 export default compose(
-  graphql(getCurrentModel, {
+  graphql(currentModel, {
     props: ({ data: { loading, error, currentModel } }) => ({
       loading,
       error,

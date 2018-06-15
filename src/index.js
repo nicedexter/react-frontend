@@ -12,8 +12,8 @@ import { ApolloLink } from 'apollo-link' // flowlint-line untyped-import:off
 
 import { BrowserRouter as Router } from 'react-router-dom'
 
-import App from './App'
-import { resolvers, defaultState, schema } from './graphql'
+import App from './components/App'
+import { resolvers, defaults, schema } from './graphql'
 import registerServiceWorker from './registerServiceWorker'
 
 import './index.css'
@@ -24,7 +24,7 @@ const cache = new InMemoryCache()
 
 const stateLink = withClientState({
   cache,
-  defaults: defaultState,
+  defaults,
   resolvers,
   schema,
 })
@@ -33,7 +33,7 @@ const client = new ApolloClient({
   link: ApolloLink.from([
     stateLink,
     new HttpLink({
-      uri: 'http://localhost:3000/graphql/',
+      uri: 'http://155.105.202.23:3000/graphql/',
     }),
   ]),
   cache,

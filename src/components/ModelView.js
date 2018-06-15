@@ -10,7 +10,7 @@ const ModelView = ({
   handleSave,
   handleSelect,
   currentModel: { variables, covariables, filters, title },
-  allModels,
+  models,
 }: {
   currentModel: ModelType,
 }) => (
@@ -21,8 +21,8 @@ const ModelView = ({
       title={title}
       id={'split-button'}
     >
-      {allModels &&
-        allModels.map((m, i) => (
+      {models &&
+        models.map((m, i) => (
           <MenuItem eventKey={i} key={m.slug} onSelect={handleSelect}>
             {m.title}
           </MenuItem>

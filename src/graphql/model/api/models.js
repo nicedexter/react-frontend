@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 
 export default gql`
   {
-    allModels {
+    models {
       query {
         variables {
           code
