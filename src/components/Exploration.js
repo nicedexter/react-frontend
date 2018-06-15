@@ -21,13 +21,11 @@ class Hierarchy extends React.PureComponent<Props> {
   }
 
   handleClick = (variable, type) => {
-    this.props.handleClick(variable, type)
+    this.props.handleClick([variable], type)
   }
 
   handleGroupClick = (group, type) => {
-    group.variables.forEach(variable => {
-      this.props.handleClick(variable, type)
-    })
+    this.props.handleClick(group.variables, type)
   }
 
   includesVariable = variable => {

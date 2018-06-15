@@ -23,13 +23,13 @@ type Props = {
 }
 
 class ExplorationContainer extends React.PureComponent<Props> {
-  handleClick = (variable, type) => {
+  handleClick = (variables, type) => {
     const { updateModel } = this.props
     const nextModel = {}
     if (type === 'variable') {
-      nextModel.variable = variable
+      nextModel.variables = variables
     } else if (type === 'covariable') {
-      nextModel.covariable = variable
+      nextModel.covariables = variables
     }
     updateModel({ variables: nextModel })
   }

@@ -30,7 +30,9 @@ export default gql`
       groupings {
         ...VariableParts
       }
-      filters
+      filters {
+        ...VariableParts
+      }
       testingDatasets {
         ...VariableParts
       }

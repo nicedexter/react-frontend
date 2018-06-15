@@ -8,7 +8,7 @@ export default {
     variables: [],
     covariables: [],
     groupings: [],
-    filters: '',
+    filters: [],
     testingDatasets: [],
     trainingDatasets: [],
     validationDatasets: [],

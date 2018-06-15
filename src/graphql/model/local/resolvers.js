@@ -7,20 +7,20 @@ export default {
   Mutation: {
     updateModel: (
       _: any,
-      { index, variable, covariable, filter },
+      { index, variables, covariables, filters },
       { cache }: { cache: any }
     ) => {
       const previous = cache.readQuery({ query: currentModel })
       const currentModel = previous.currentModel
 
-      if (variable) {
-        const previousVariables = previous.currentModel.variables
-        if (!previousVariables.includes(variable)) {
-          currentModel.variables = previousVariables.push(variable)
-        } else {
-          currentModel.variables = previousVariables.filter(v => v !== variable)
-        }
-      }
+      // if (variable) {
+      //   const previousVariables = previous.currentModel.variables
+      //   if (!previousVariables.includes(variable)) {
+      //     currentModel.variables = previousVariables.push(variable)
+      //   } else {
+      //     currentModel.variables = previousVariables.filter(v => v !== variable)
+      //   }
+      // }
 
       // if (covariable) {
       //   if (!previous.currentModel.covariables.includes(covariable)) {
@@ -44,7 +44,7 @@ export default {
       //   }
       // }
 
-      cache.writeQuery({ currentModel, data: currentModel })
+      // cache.writeQuery({ currentModel, data: currentModel })
     },
     // resetCurrentModel: (_, d, { cache }) => {
     //   cache.writeData({ data: defaultState })

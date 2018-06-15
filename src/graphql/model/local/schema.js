@@ -7,7 +7,7 @@ type LocalModel {
     variables: [Variable]
     covariables: [Variable] 
     groupings: [Variable]
-    filters: String 
+    filters: [Variable] 
     testingDatasets: [Variable]
     trainingDatasets: [Variable]
     validationDatasets: [Variable]
