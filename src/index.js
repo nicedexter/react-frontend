@@ -33,7 +33,7 @@ const client = new ApolloClient({
   link: ApolloLink.from([
     stateLink,
     new HttpLink({
-      uri: 'http://155.105.202.23:3000/graphql/',
+      uri: 'http://localhost:3000/graphql/',
     }),
   ]),
   cache,
