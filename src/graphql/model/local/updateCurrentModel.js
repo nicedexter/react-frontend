@@ -4,20 +4,38 @@ import gql from 'graphql-tag'
 
 export default gql`
   mutation updateCurrentModel (
-    $index: String!
     $variables: [Variable]
     $covariables: [Variable]
     $filters: [Variable]
   ) {
     updateCurrentModel (
-      index: $index
       variables: $variables
       covariables: $covariables
       filters: $filters
     ) @client {
-      variables
-      covariables
-      filters
+      title
+      slug
+      variables {
+        ...VariableParts
+      }
+      covariables {
+        ...VariableParts
+      }
+      groupings {
+        ...VariableParts
+      }
+      filters {
+        ...VariableParts
+      }
+      testingDatasets {
+        ...VariableParts
+      }
+      trainingDatasets {
+        ...VariableParts
+      }
+      validationDatasets {
+        ...VariableParts
+      }
     }
   }
 `

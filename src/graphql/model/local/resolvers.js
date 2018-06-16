@@ -1,53 +1,50 @@
 // @flow
 
 import gql from 'graphql-tag'
-import currentModel from './currentModel'
+import query from './currentModel'
 
 export default {
   Mutation: {
     updateCurrentModel: (
       _: any,
-      { index, variables, covariables, filters },
+      { variables, covariables, filters },
       { cache }: { cache: any }
     ) => {
-      const previous = cache.readQuery({ query: currentModel })
-      const currentModel = previous.currentModel
+      const state = cache.readQuery({ query })
+      const previousModel = state.currentModel
+      const nextModel = Object.assign({}, previousModel)
 
-      // if (variable) {
-      //   const previousVariables = previous.currentModel.variables
-      //   if (!previousVariables.includes(variable)) {
-      //     currentModel.variables = previousVariables.push(variable)
-      //   } else {
-      //     currentModel.variables = previousVariables.filter(v => v !== variable)
-      //   }
-      // }
+      if (variables && variables.length > 0) {
+        // Uses Set built in to intersect/union variables
+        // Unfortunately, inheritage from Set doesn't work well yet, and comparing {} === {} => false
+        // So I use codes to filter, and rebuild at the end
 
-      // if (covariable) {
-      //   if (!previous.currentModel.covariables.includes(covariable)) {
-      //     currentModel.covariables = previous.currentModel.covariables.concat(
-      //       covariable
-      //     )
-      //   } else {
-      //     currentModel.covariables = previous.currentModel.covariables.filter(
-      //       v => v !== covariable
-      //     )
-      //   }
-      // }
+        const allVars = [...variables, ...previousModel.variables]
+        const toCode = v => v.code
+        const toObject = code => allVars.find(r => r.code === code)
 
-      // if (filter) {
-      //   if (!previous.currentModel.filters.includes(filter)) {
-      //     currentModel.filters = previous.currentModel.filters.concat(filter)
-      //   } else {
-      //     currentModel.filters = previous.currentModel.filters.filter(
-      //       v => v !== filter
-      //     )
-      //   }
-      // }
+        const newCodes = variables.map(toCode)
+        const previousCodes = previousModel.variables.map(toCode)
 
-      // cache.writeQuery({ currentModel, data: currentModel })
+        const addCodes = new Set([
+          ...newCodes.filter(v => !new Set(previousCodes).has(v)),
+        ]) 
+
+        const removeCodes = new Set([
+          ...previousCodes.filter(v => new Set(newCodes).has(v)),
+        ])
+
+        const nextVariables = new Set(
+          [...previousCodes, ...addCodes].filter(v => !removeCodes.has(v))
+        )
+
+        nextModel.variables = [...nextVariables].map(toObject)
+      }
+
+      const data = { currentModel: nextModel }
+      cache.writeQuery({ query, data })
+
     },
-    // resetCurrentModel: (_, d, { cache }) => {
-    //   cache.writeData({ data: defaultState })
-    // },
+
   },
 }
