@@ -5,7 +5,7 @@ import currentModel from './currentModel'
 
 export default {
   Mutation: {
-    updateModel: (
+    updateCurrentModel: (
       _: any,
       { index, variables, covariables, filters },
       { cache }: { cache: any }

@@ -3,13 +3,13 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  mutation updateModel(
+  mutation updateCurrentModel (
     $index: String!
     $variables: [Variable]
     $covariables: [Variable]
     $filters: [Variable]
   ) {
-    updateModel(
+    updateCurrentModel (
       index: $index
       variables: $variables
       covariables: $covariables

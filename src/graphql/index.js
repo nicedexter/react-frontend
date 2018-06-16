@@ -19,7 +19,7 @@ export { default as models } from './model/api/models'
 export { default as saveModel } from './model/api/saveModel'
 
 // MODELS - Local - used to store augmented model
-export { default as updateModel } from './model/local/updateModel'
+export { default as updateCurrentModel } from './model/local/updateCurrentModel'
 export { default as currentModel } from './model/local/currentModel'
 
 // Algorithms

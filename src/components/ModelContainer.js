@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { updateModel, currentModel, models, saveModel } from '../graphql'
+import { updateCurrentModel, currentModel, models, saveModel } from '../graphql'
 import { Model } from './'
 import { ModelProps } from '../proptypes'
 
@@ -78,7 +78,7 @@ ModelContainer.propTypes = propTypes
 
 export default compose(
   graphql(saveModel, { name: 'saveModel' }),
-  graphql(updateModel, { name: 'updateModel' }),
+  graphql(updateCurrentModel, { name: 'updateCurrentModel' }),
   graphql(currentModel, {
     props: ({ data: { loading, error, currentModel } }) => ({
       loading,

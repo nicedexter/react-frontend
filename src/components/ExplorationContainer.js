@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { groupsAndVariables, currentModel, updateModel } from '../graphql'
+import { groupsAndVariables, currentModel, updateCurrentModel } from '../graphql'
 import { Exploration } from './'
 
 import { HierarchyProps } from '../proptypes'
@@ -18,20 +18,20 @@ const propTypes = {
 type Props = {
   loading: boolean,
   error?: Object,
-  updateModel: Function,
+  updateCurrentModel: Function,
   hierarchy: GroupsType[],
 }
 
 class ExplorationContainer extends React.PureComponent<Props> {
   handleClick = (variables, type) => {
-    const { updateModel } = this.props
+    const { updateCurrentModel } = this.props
     const nextModel = {}
     if (type === 'variable') {
       nextModel.variables = variables
     } else if (type === 'covariable') {
       nextModel.covariables = variables
     }
-    updateModel({ variables: nextModel })
+    updateCurrentModel({ variables: nextModel })
   }
 
   render() {
@@ -70,7 +70,7 @@ export default compose(
       currentModel,
     }),
   }),
-  graphql(updateModel, { name: 'updateModel' }),
+  graphql(updateCurrentModel, { name: 'updateCurrentModel' }),
   graphql(groupsAndVariables, {
     props: ({ data: { loading, error, variables, groups } }) => {
       const hierarchy =
