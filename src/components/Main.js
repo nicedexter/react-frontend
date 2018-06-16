@@ -2,12 +2,14 @@
 
 import React from 'react'
 import { Panel, Pager } from 'react-bootstrap'
-import ExplorationContainer from './ExplorationContainer'
-import ModelContainer from './ModelContainer'
-import Analysis from './Analysis'
-import Experiment from './Experiment'
-import Results from './Results'
-import { Datasets } from './'
+import {
+  ExplorationContainer,
+  ModelContainer,
+  Datasets,
+  Analysis,
+  Experiment,
+  Results,
+} from './'
 
 import './Main.css'
 

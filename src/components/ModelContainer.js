@@ -5,7 +5,7 @@ import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
 import { updateModel, currentModel, models, saveModel } from '../graphql'
-import ModelView from './ModelView'
+import { Model } from './'
 import { ModelProps } from '../proptypes'
 
 const propTypes = {
@@ -63,7 +63,7 @@ class ModelContainer extends React.Component<Props> {
 
     return (
       <div>
-        <ModelView
+        <Model
           models={models}
           currentModel={currentModel}
           handleSave={this.handleSave}

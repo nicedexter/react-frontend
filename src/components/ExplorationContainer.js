@@ -5,7 +5,7 @@ import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
 import { groupsAndVariables, currentModel, updateModel } from '../graphql'
-import Exploration from './Exploration'
+import { Exploration } from './'
 
 import { HierarchyProps } from '../proptypes'
 
