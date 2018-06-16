@@ -10,6 +10,7 @@ export { default as defaults } from './model/local/defaultState'
 export { default as resolvers } from './model/local/resolvers'
 
 // Getters for main content
+export { default as datasets } from './content/datasets'
 export { default as groupsAndVariables } from './content/groupsAndVariables'
 export { default as methods } from './content/methods'
 
