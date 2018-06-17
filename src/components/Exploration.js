@@ -105,25 +105,24 @@ class Hierarchy extends React.PureComponent<Props> {
     const c = group.subgroupCount
     const v = group.subvariablesCount
 
-    let description =  c > 0 ? (c > 1 ? `${c} groups` : `${c} group` ) : ''
-
+    let description = c > 0 ? (c > 1 ? `${c} groups` : `${c} group`) : ''
     if (c > 0 && v > 0) description += ', '
-
-    description += v > 0 ? (v > 1 ? `${v} variables` : `${v} variable` ) : ''
-
+    description += v > 0 ? (v > 1 ? `${v} variables` : `${v} variable`) : ''
     const title = `${group.label}  (${description})`
-    
-    return <div key={group.code} className="groupContainer">
-      <TreeView
-        key={group.code + '|' + i}
-        nodeDescription={this.groupDescription(group)}
-        nodeTitle={title}
-        defaultCollapsed={true}
-      >
-        {group.variables ? this.variableView(group.variables) : null}
-        {group.groups ? group.groups.map(this.groupView) : null}
-      </TreeView>
-    </div>
+
+    return (
+      <div key={group.code} className="groupContainer">
+        <TreeView
+          key={group.code + '|' + i}
+          nodeDescription={this.groupDescription(group)}
+          nodeTitle={title}
+          defaultCollapsed={true}
+        >
+          {group.variables ? this.variableView(group.variables) : null}
+          {group.groups ? group.groups.map(this.groupView) : null}
+        </TreeView>
+      </div>
+    )
   }
 
   variableView = (variables: VariableType[]) =>
