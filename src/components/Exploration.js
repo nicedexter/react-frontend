@@ -28,18 +28,18 @@ class Hierarchy extends React.PureComponent<Props> {
     this.props.handleClick(group.variables, type)
   }
 
-  includesVariable = variable => {
+  includesVariable = code => {
     const {
       currentModel: { variables },
     } = this.props
-    return variables.map(v => v.code).includes(variable)
+    return variables.map(v => v.code).includes(code)
   }
 
-  includesCovariable = variable => {
+  includesCovariable = code => {
     const {
       currentModel: { covariables },
     } = this.props
-    return covariables.map(v => v.code).includes(variable)
+    return covariables.map(v => v.code).includes(code)
   }
 
   includesVariablesInGroup = code => {
@@ -59,13 +59,12 @@ class Hierarchy extends React.PureComponent<Props> {
 
   description = (variable: VariableType) => (
     <React.Fragment>
-      <p className="item"> 5 subgroups, 56 variables</p>
       <p className="item">Add to model as</p>
       <Button
         onClick={() => this.handleClick(variable, 'variable')}
         className="item"
         bsSize="xsmall"
-        active={this.includesVariable(variable)}
+        active={this.includesVariable(variable.code)}
       >
         variables{' '}
       </Button>
@@ -73,7 +72,7 @@ class Hierarchy extends React.PureComponent<Props> {
         onClick={() => this.handleClick(variable, 'covariable')}
         className="item"
         bsSize="xsmall"
-        active={this.includesCovariable(variable)}
+        active={this.includesCovariable(variable.code)}
       >
         covariables
       </Button>
@@ -82,7 +81,6 @@ class Hierarchy extends React.PureComponent<Props> {
 
   groupDescription = (group: GroupsType) => (
     <React.Fragment>
-      <p className="item"> 5 subgroups, 56 variables</p>
       <p className="item">Add to model as</p>
       <Button
         onClick={() => this.handleGroupClick(group, 'variable')}
@@ -103,19 +101,30 @@ class Hierarchy extends React.PureComponent<Props> {
     </React.Fragment>
   )
 
-  groupView = (group: GroupsType, i: number) => (
-    <div key={group.code} className="groupContainer">
+  groupView = (group: GroupsType, i: number) => {
+    const c = group.subgroupCount
+    const v = group.subvariablesCount
+
+    let description =  c > 0 ? (c > 1 ? `${c} groups` : `${c} group` ) : ''
+
+    if (c > 0 && v > 0) description += ', '
+
+    description += v > 0 ? (v > 1 ? `${v} variables` : `${v} variable` ) : ''
+
+    const title = `${group.label}  (${description})`
+    
+    return <div key={group.code} className="groupContainer">
       <TreeView
         key={group.code + '|' + i}
         nodeDescription={this.groupDescription(group)}
-        nodeTitle={group.label}
+        nodeTitle={title}
         defaultCollapsed={true}
       >
         {group.variables ? this.variableView(group.variables) : null}
         {group.groups ? group.groups.map(this.groupView) : null}
       </TreeView>
     </div>
-  )
+  }
 
   variableView = (variables: VariableType[]) =>
     // $FlowFixMe

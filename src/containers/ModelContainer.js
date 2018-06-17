@@ -24,7 +24,6 @@ class ModelContainer extends React.Component<Props> {
   constructor(props) {
     super(props)
     this.state = { currentModel: {} }
-    this.handleSave = this.handleSave.bind(this)
   }
 
   handleSave = async () => {
@@ -49,6 +48,16 @@ class ModelContainer extends React.Component<Props> {
     this.setState({ currentModel: models[eventKey] })
   }
 
+  handleDelete = (_, variable, type) => {
+    const { updateCurrentModel } = this.props
+    let variables = {}
+    if (type === 'variables') variables = { variables: [variable] }
+    if (type === 'covariables') variables = { covariables: [variable] }
+    if (type === 'filters') variables = { filters: [variable] }
+
+    updateCurrentModel({ variables })
+  }
+
   componentWillReceiveProps(props) {
     const { currentModel } = props
     this.setState({ currentModel })
@@ -69,6 +78,7 @@ class ModelContainer extends React.Component<Props> {
           currentModel={currentModel}
           handleSave={this.handleSave}
           handleSelect={this.handleSelect}
+          handleDelete={this.handleDelete}
         />
       </div>
     )

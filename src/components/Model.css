@@ -1,0 +1,5 @@
+.variables, .covariables, .filters, .variables-label {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}

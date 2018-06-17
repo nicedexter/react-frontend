@@ -54,13 +54,18 @@ class ExplorationContainer extends React.PureComponent<Props> {
 
 ExplorationContainer.propTypes = propTypes
 
-const makeHierarchy = (groups: GroupsType[], variables: Array<VariableType>) =>
-  groups.map(group => ({
+const makeHierarchy = (groups: GroupsType[], variables: Array<VariableType>) => 
+  groups.map(group => {
+    const subvariables = variables.filter(variable => variable.group.code === group.code)
+    return ({
     code: group.code,
     label: group.label,
     groups: group.groups ? makeHierarchy(group.groups, variables) : null,
-    variables: variables.filter(variable => variable.group.code === group.code),
-  }))
+    variables: subvariables,
+    subgroupCount:  group.groups ?  group.groups.length : 0,
+    subvariablesCount: subvariables.length
+  })})
+
 
 export default compose(
   graphql(currentModel, {
