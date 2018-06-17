@@ -4,8 +4,8 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { updateCurrentModel, currentModel, models, saveModel } from '../graphql'
-import { Model } from './'
+import { updateCurrentModel, currentModel, models, saveModel, datasets } from '../graphql'
+import { Model } from '../components'
 import { ModelProps } from '../proptypes'
 
 const propTypes = {
@@ -55,7 +55,7 @@ class ModelContainer extends React.Component<Props> {
   }
 
   render() {
-    const { loading, error, models } = this.props
+    const { loading, error, models, datasets } = this.props
     const { currentModel } = this.state
 
     if (loading) return <p>Loading...</p>
@@ -65,6 +65,7 @@ class ModelContainer extends React.Component<Props> {
       <div>
         <Model
           models={models}
+          datasets={datasets}
           currentModel={currentModel}
           handleSave={this.handleSave}
           handleSelect={this.handleSelect}
@@ -91,6 +92,13 @@ export default compose(
       loading,
       error,
       models,
+    }),
+  }),
+  graphql(datasets, {
+    props: ({ data: { loading, error, datasets } }) => ({
+      loading,
+      error,
+      datasets,
     }),
   })
 )(ModelContainer)

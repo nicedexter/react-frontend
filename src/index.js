@@ -12,7 +12,7 @@ import { ApolloLink } from 'apollo-link' // flowlint-line untyped-import:off
 
 import { BrowserRouter as Router } from 'react-router-dom'
 
-import App from './components/App'
+import { App } from './containers'
 import { resolvers, defaults, schema } from './graphql'
 import registerServiceWorker from './registerServiceWorker'
 

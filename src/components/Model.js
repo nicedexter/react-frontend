@@ -3,13 +3,16 @@
 import React from 'react'
 import { Label, Button, SplitButton, MenuItem } from 'react-bootstrap'
 
+import { Datasets } from '.'
+
 import './Model.css'
 import { ModelProps } from '../proptypes'
+import { datasets } from '../graphql';
 
-const ModelView = ({
+const Model = ({
   handleSave,
   handleSelect,
-  currentModel: { variables, covariables, filters, title },
+  currentModel: { datasets, variables, covariables, filters, title },
   models,
 }: {
   currentModel: ModelType,
@@ -28,6 +31,13 @@ const ModelView = ({
           </MenuItem>
         ))}
     </SplitButton>
+
+   
+
+    <div className="datasets">
+      <h4>Datasets ({(datasets && datasets.length) || 0})</h4>
+      {datasets && datasets.map(v => <Label key={v.code}>{v.label}</Label>)}
+    </div>
 
     <div className="variables">
       <h4>Variables ({(variables && variables.length) || 0}/1)</h4>
@@ -48,6 +58,6 @@ const ModelView = ({
   </div>
 )
 
-ModelView.propType = ModelProps
+Model.propType = ModelProps
 
-export default ModelView
+export default Model

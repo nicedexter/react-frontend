@@ -5,11 +5,13 @@ import { Panel, Pager } from 'react-bootstrap'
 import {
   ExplorationContainer,
   ModelContainer,
+} from './'
+import {
   Datasets,
   Analysis,
   Experiment,
   Results,
-} from './'
+} from '../components'
 
 import './Main.css'
 
@@ -41,16 +43,6 @@ class ExperimentController extends React.PureComponent {
         <div>
           <div className="wrapper">
             <div className="box exploration">
-              <Panel id="panel-datasets" defaultExpanded>
-                <Panel.Heading>
-                  <Panel.Title toggle>Datasets</Panel.Title>
-                </Panel.Heading>
-                <Panel.Collapse>
-                  <Panel.Body collapsible>
-                    <Datasets />
-                  </Panel.Body>
-                </Panel.Collapse>
-              </Panel>
               <Panel id="panel-exploration" defaultExpanded>
                 <Panel.Heading>
                   <Panel.Title toggle>Epidemiological Exploration</Panel.Title>

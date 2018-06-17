@@ -27,9 +27,6 @@ export default gql`
       covariables {
         ...VariableParts
       }
-      groupings {
-        ...VariableParts
-      }
       filters {
         ...VariableParts
       }
