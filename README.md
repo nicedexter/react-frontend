@@ -16,6 +16,9 @@ TODO
   - Model Drag'n'Drop
   - Circle visualisation
   - Even odd display
+<<<<<<< HEAD
   - Smaller font for (1 group), better handling for <Button />
   - Save button state (disabled)
   - Click on model's property lead to exploration variable
+=======
+>>>>>>> 02ef80797936ab00740f1fbd237101ce7f672d60

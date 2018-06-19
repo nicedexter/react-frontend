@@ -10,7 +10,6 @@ export default {
       const { variables: variableList } = cache.readQuery({
         query: variablesQuery,
       })
-      
       const state = cache.readQuery({ query })
       const previousModel = state.currentModel
       const nextModel = Object.assign({}, previousModel)
