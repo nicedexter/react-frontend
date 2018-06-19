@@ -104,7 +104,6 @@ class Hierarchy extends React.PureComponent<Props> {
   groupView = (group: GroupsType, i: number) => {
     const c = group.subgroupCount
     const v = group.subvariablesCount
-
     let description = c > 0 ? (c > 1 ? `${c} groups` : `${c} group`) : ''
     if (c > 0 && v > 0) description += ', '
     description += v > 0 ? (v > 1 ? `${v} variables` : `${v} variable`) : ''
@@ -145,8 +144,7 @@ class Hierarchy extends React.PureComponent<Props> {
   render() {
     const { hierarchy }: { hierarchy: GroupsType[] } = this.props
     return (
-      <div>
-        TreeView
+      <div className="exploration-tree-container">
         {hierarchy.map(this.groupView)}
       </div>
     )

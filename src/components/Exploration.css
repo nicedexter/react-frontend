@@ -7,8 +7,9 @@ p {
   font: 0.8em sans-serif;
 }
 
-.item {
-  flex: 1;
-  white-space: nowrap;
-  margin: 0 5px;
+.exploration-tree-container
+  .groupContainer:nth-child(odd)
+  .tree-view
+  > .tree-view_item {
+  background-color: gainsboro;
 }

@@ -4,8 +4,14 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { updateCurrentModel, currentModel, models, saveModel, datasets } from '../graphql'
-import { Model } from '../components'
+import {
+  updateCurrentModel,
+  currentModel,
+  models,
+  saveModel,
+  datasets,
+} from '../graphql'
+import { Model, ModalTitleInput } from '../components'
 import { ModelProps } from '../proptypes'
 
 const propTypes = {
@@ -23,29 +29,64 @@ type Props = {
 class ModelContainer extends React.Component<Props> {
   constructor(props) {
     super(props)
-    this.state = { currentModel: {} }
+    this.state = { currentModel: {}, showModal: false }
   }
 
-  handleSave = async () => {
+  handleSave = () => {
     const { saveModel, currentModel } = this.props
+    this.setState({ showModal: true })
+  }
+
+  handleSaveModal = async (event, value) => {
+    event.preventDefault()
+    console.log('handleSaveModal', value)
+    const { saveModel, currentModel, updateCurrentModel } = this.props
+
+    const nextModel = {}
+    const { title, slug, __typename, ...others } = currentModel
+    nextModel.title = value
+    nextModel.slug = slug
+
+    Object.keys(others).map(name => {
+      const elements = currentModel[name]
+      if (!elements) return
+
+      nextModel[name] = elements.map(e => ({ code: e.code }))
+    })
+
     try {
-      await saveModel({
+      const newModel = await saveModel({
         variables: {
-          variables: currentModel.variables.map(v => v.code).join(','),
-          covariables: currentModel.covariables.map(v => v.code).join(','),
+          ...nextModel,
         },
       })
-      // await resetCurrentModel()
-      this.setState({ created: true })
+
+      updateCurrentModel({ variables: { slug: newModel.slug, title: value } })
+
+      this.setState({ showModal: false })
     } catch (error) {
-      this.setState({ error })
+      console.log(error)
+      this.setState({ error: error.message })
     }
+  }
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false })
   }
 
   handleSelect = eventKey => {
     console.log(eventKey)
-    const { models } = this.props
-    this.setState({ currentModel: models[eventKey] })
+    const { models, updateCurrentModel } = this.props
+    const { title, slug, query, __typename } = models[eventKey]
+    const variables = Object.assign(
+      {},
+      { ...query },
+      { covariables: query.coVariables },
+      { coVariables: [] },
+      { filters: [] },
+      { title, slug }
+    )
+    updateCurrentModel({ variables })
   }
 
   handleDelete = (_, variable, type) => {
@@ -65,13 +106,20 @@ class ModelContainer extends React.Component<Props> {
 
   render() {
     const { loading, error, models, datasets } = this.props
-    const { currentModel } = this.state
+    const { currentModel, showModal } = this.state
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error {error.message}</p>
 
     return (
       <div>
+        {showModal && (
+          <ModalTitleInput
+            error={this.state.error}
+            handleClose={this.handleCloseModal}
+            handleSave={this.handleSaveModal}
+          />
+        )}
         <Model
           models={models}
           datasets={datasets}
