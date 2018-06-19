@@ -2,50 +2,51 @@
 
 import gql from 'graphql-tag'
 import query from './currentModel'
+import variablesQuery from '../../content/variables'
 
 export default {
   Mutation: {
     updateCurrentModel: (_: any, variables, { cache }: { cache: any }) => {
       const state = cache.readQuery({ query })
+      const { variables: variableList } = cache.readQuery({
+        query: variablesQuery,
+      })
       const previousModel = state.currentModel
       const nextModel = Object.assign({}, previousModel)
 
-      for (const name of [
-        'variables',
-        'covariables',
-        'filters',
-        'testingDatasets',
-        'trainingDatasets',
-        'validationDatasets',
-      ]) {
+      const { title, slug, ...others } = variables
+      nextModel.title = title
+      nextModel.slug = slug
+
+      Object.keys(others).map(name => {
         const elements = variables[name]
-        if (elements && elements.length > 0) {
-          // Uses Set built-in to intersect/union variables
-          // Unfortunately, inheritage from Set doesn't work well yet, and comparing {} === {} => false
-          // So I use codes to filter, and rebuild at the end
+        if (!elements) return
 
-          const allVars = [...elements, ...previousModel[name]] // keep everything to rebuild objects
-          const toCode = v => v.code
-          const toObject = code => allVars.find(r => r.code === code)
+        // Uses class Set built-in to intersect/union variables
+        // But you can't compare objects, and unfortunately, 'inheriting' from Set doesn't work well yet
+        // So I use strings to filter, and rebuild the objects at the end
 
-          const newCodes = elements.map(toCode)
-          const previousCodes = previousModel[name].map(toCode)
+        // Keeps everything to rebuild objects
+        const toCode = v => v.code
+        const toObject = code => variableList.find(r => r.code === code)
 
-          const addCodes = new Set([
-            ...newCodes.filter(v => !new Set(previousCodes).has(v)),
-          ])
+        const newCodes = elements.map(toCode)
+        const previousCodes = previousModel[name].map(toCode)
 
-          const removeCodes = new Set([
-            ...previousCodes.filter(v => new Set(newCodes).has(v)),
-          ])
+        const addCodes = new Set([
+          ...newCodes.filter(v => !new Set(previousCodes).has(v)),
+        ])
 
-          const nextElements = new Set(
-            [...previousCodes, ...addCodes].filter(v => !removeCodes.has(v))
-          )
+        const removeCodes = new Set([
+          ...previousCodes.filter(v => new Set(newCodes).has(v)),
+        ])
 
-          nextModel[name] = [...nextElements].map(toObject)
-        }
-      }
+        const nextElements = new Set(
+          [...previousCodes, ...addCodes].filter(v => !removeCodes.has(v))
+        )
+
+        nextModel[name] = [...nextElements].map(toObject)
+      })
 
       const data = { currentModel: nextModel }
       cache.writeQuery({ query, data })

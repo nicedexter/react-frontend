@@ -4,8 +4,12 @@ import React from 'react'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
-import { groupsAndVariables, currentModel, updateCurrentModel } from '../graphql'
-import { Exploration } from '../components'
+import {
+  groupsAndVariables,
+  currentModel,
+  updateCurrentModel,
+} from '../graphql'
+import { Exploration, ModelTitleInput } from '../components'
 
 import { HierarchyProps } from '../proptypes'
 
@@ -54,18 +58,20 @@ class ExplorationContainer extends React.PureComponent<Props> {
 
 ExplorationContainer.propTypes = propTypes
 
-const makeHierarchy = (groups: GroupsType[], variables: Array<VariableType>) => 
+const makeHierarchy = (groups: GroupsType[], variables: Array<VariableType>) =>
   groups.map(group => {
-    const subvariables = variables.filter(variable => variable.group.code === group.code)
-    return ({
-    code: group.code,
-    label: group.label,
-    groups: group.groups ? makeHierarchy(group.groups, variables) : null,
-    variables: subvariables,
-    subgroupCount:  group.groups ?  group.groups.length : 0,
-    subvariablesCount: subvariables.length
-  })})
-
+    const subvariables = variables.filter(
+      variable => variable.group.code === group.code
+    )
+    return {
+      code: group.code,
+      label: group.label,
+      groups: group.groups ? makeHierarchy(group.groups, variables) : null,
+      variables: subvariables,
+      subgroupCount: group.groups ? group.groups.length : 0,
+      subvariablesCount: subvariables.length,
+    }
+  })
 
 export default compose(
   graphql(currentModel, {

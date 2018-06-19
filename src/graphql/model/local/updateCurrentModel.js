@@ -4,6 +4,8 @@ import gql from 'graphql-tag'
 
 export default gql`
   mutation updateCurrentModel(
+    $title: String
+    $slug: String
     $variables: [Variable]
     $covariables: [Variable]
     $filters: [Variable]
@@ -12,6 +14,8 @@ export default gql`
     $validationDatasets: [Variable]
   ) {
     updateCurrentModel(
+      title: $title
+      slug: $slug
       variables: $variables
       covariables: $covariables
       filters: $filters
