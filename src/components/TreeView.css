@@ -64,3 +64,5 @@ p {
   transform: rotate(-90deg);
   flex: 1;
 }
+
+.form-group { width: 160px}

@@ -3,13 +3,15 @@
   width: 100%;
 }
 
-p {
-  font: 0.8em sans-serif;
-}
 
 .exploration-tree-container
   .groupContainer:nth-child(odd)
   .tree-view
   > .tree-view_item {
   background-color: gainsboro;
+}
+
+#panel-exploration--body p {
+  font: 0.8em sans-serif;
+  margin-bottom: 20px;
 }

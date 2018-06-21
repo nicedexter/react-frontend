@@ -15,11 +15,12 @@ export default {
       const nextModel = Object.assign({}, previousModel)
 
       const { title, slug, ...others } = variables
-      nextModel.title = title
-      nextModel.slug = slug
+      if (title) nextModel.title = title
+      if (slug) nextModel.slug = slug
 
       Object.keys(others).map(name => {
         const elements = variables[name]
+
         if (!elements) return
 
         // Uses class Set built-in to intersect/union variables

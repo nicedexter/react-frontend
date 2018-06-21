@@ -5,7 +5,7 @@ import React from 'react'
 import TreeView from './TreeView'
 import Histogram from './Histogram'
 import { HierarchyProps } from '../proptypes'
-import { Glyphicon, Button } from 'react-bootstrap'
+import { Glyphicon, Button, FormGroup, Radio } from 'react-bootstrap'
 
 import './Exploration.css'
 
@@ -59,14 +59,13 @@ class Hierarchy extends React.PureComponent<Props> {
 
   description = (variable: VariableType) => (
     <React.Fragment>
-      <p className="item">Add to model as</p>
       <Button
         onClick={() => this.handleClick(variable, 'variable')}
         className="item"
         bsSize="xsmall"
         active={this.includesVariable(variable.code)}
       >
-        variables{' '}
+        <Glyphicon glyph="stats" />
       </Button>
       <Button
         onClick={() => this.handleClick(variable, 'covariable')}
@@ -74,14 +73,18 @@ class Hierarchy extends React.PureComponent<Props> {
         bsSize="xsmall"
         active={this.includesCovariable(variable.code)}
       >
-        covariables
+        <Glyphicon glyph="stats" />
       </Button>
     </React.Fragment>
   )
 
   groupDescription = (group: GroupsType) => (
     <React.Fragment>
-      <p className="item">Add to model as</p>
+      <FormGroup bsSize="lg">
+        <Radio name="radioGroup" inline /> <Radio name="radioGroup" inline />{' '}
+        <Radio name="radioGroup" inline />
+      </FormGroup>
+      {/* <p className="item">Add to model as</p>
       <Button
         onClick={() => this.handleGroupClick(group, 'variable')}
         className="item"
@@ -97,25 +100,35 @@ class Hierarchy extends React.PureComponent<Props> {
         active={this.includesCovariablesInGroup(group.code)}
       >
         covariables
-      </Button>
+      </Button> */}
     </React.Fragment>
   )
 
   groupView = (group: GroupsType, i: number) => {
     const c = group.subgroupCount
     const v = group.subvariablesCount
-    let description = c > 0 ? (c > 1 ? `${c} groups` : `${c} group`) : ''
-    if (c > 0 && v > 0) description += ', '
-    description += v > 0 ? (v > 1 ? `${v} variables` : `${v} variable`) : ''
-    const title = `${group.label}  (${description})`
+
+    const display = (word, count) => count === 0 ? word : null
+    const pluralize = (word, count) => count > 1 ? `${word}s` : word
+    
+    // display('group', c)
+    
+    let groups = pluralize('group', c)
+    let subvariables = pluralize('variable', v)
+
+    // let description = c > 0 ? (c > 1 ? `${c} groups` : `${c} group`) : ''
+    // if (c > 0 && v > 0) description += ', '
+    // description += v > 0 ? (v > 1 ? `${v} variables` : `${v} variable`) : ''
+    const description = `${c} ${groups}  ${v} ${subvariables}`
 
     return (
       <div key={group.code} className="groupContainer">
         <TreeView
           key={group.code + '|' + i}
-          nodeDescription={this.groupDescription(group)}
-          nodeTitle={title}
+          nodeDescription={description}
+          nodeTitle={group.label}
           defaultCollapsed={true}
+          nodeIcon={<Glyphicon glyph="briefcase" />}
         >
           {group.variables ? this.variableView(group.variables) : null}
           {group.groups ? group.groups.map(this.groupView) : null}
@@ -132,7 +145,7 @@ class Hierarchy extends React.PureComponent<Props> {
         nodeTitle={variable.label}
         nodeDescription={this.description(variable)}
         defaultCollapsed={true}
-        nodeIcon={<Glyphicon glyph="signal" />}
+        nodeIcon={<Glyphicon glyph="file" />}
       >
         <div className="info">{variable.description}</div>
         <div className="info">type: {variable.type}</div>
@@ -144,9 +157,12 @@ class Hierarchy extends React.PureComponent<Props> {
   render() {
     const { hierarchy }: { hierarchy: GroupsType[] } = this.props
     return (
-      <div className="exploration-tree-container">
-        {hierarchy.map(this.groupView)}
-      </div>
+      <React.Fragment>
+        <p>Add to model as variable, covariable, filter</p>
+        <div className="exploration-tree-container">
+          {hierarchy.map(this.groupView)}
+        </div>
+      </React.Fragment>
     )
   }
 }

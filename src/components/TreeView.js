@@ -32,6 +32,7 @@ class TreeView extends React.PureComponent<Props, State> {
       nodeTitle,
       nodeDescription,
       nodeIcon,
+      nodeActions,
       children,
       defaultCollapsed,
       ...rest
@@ -62,7 +63,11 @@ class TreeView extends React.PureComponent<Props, State> {
       <div className={'tree-view'}>
         <div className={'tree-view_item'}>
           {arrow}
-          {nodeIcon} {title} {nodeDescription}
+          {nodeIcon} {title} 
+          <p className="item">
+            {nodeDescription} 
+          </p>
+          {nodeActions}
         </div>
         <div className={containerClassName}>{collapsed ? null : children}</div>
       </div>
