@@ -1,16 +1,16 @@
 // @flow
 
 import React from 'react'
+import * as R from 'ramda'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
-import { graphql, compose } from 'react-apollo' // flowlint-line untyped-import:off
 
 import {
-  updateCurrentModel,
-  currentModel,
-  models,
-  saveModel,
-  datasets,
-} from '../graphql'
+  withCurrentModel,
+  withUpdateCurrentModel,
+  withSaveModel,
+  withModels,
+  withDatasets,
+} from '../connectors'
 import { Model, ModalTitleInput } from '../components'
 import { ModelProps } from '../proptypes'
 
@@ -33,7 +33,6 @@ class ModelContainer extends React.Component<Props> {
   }
 
   handleSave = () => {
-    const { saveModel, currentModel } = this.props
     this.setState({ showModal: true })
   }
 
@@ -135,28 +134,10 @@ class ModelContainer extends React.Component<Props> {
 
 ModelContainer.propTypes = propTypes
 
-export default compose(
-  graphql(saveModel, { name: 'saveModel' }),
-  graphql(updateCurrentModel, { name: 'updateCurrentModel' }),
-  graphql(currentModel, {
-    props: ({ data: { loading, error, currentModel } }) => ({
-      loading,
-      error,
-      currentModel,
-    }),
-  }),
-  graphql(models, {
-    props: ({ data: { loading, error, models } }) => ({
-      loading,
-      error,
-      models,
-    }),
-  }),
-  graphql(datasets, {
-    props: ({ data: { loading, error, datasets } }) => ({
-      loading,
-      error,
-      datasets,
-    }),
-  })
+export default R.compose(
+  withModels,
+  withDatasets,
+  withCurrentModel,
+  withSaveModel,
+  withUpdateCurrentModel
 )(ModelContainer)

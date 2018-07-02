@@ -64,7 +64,7 @@ class TreeView extends React.PureComponent<Props, State> {
         <div className={'tree-view_item'}>
           {arrow}
           {nodeIcon} {title} 
-          <p className="item">
+          <p className="description">
             {nodeDescription} 
           </p>
           {nodeActions}

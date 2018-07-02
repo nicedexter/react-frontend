@@ -1,6 +1,5 @@
 // @flow
 
-import gql from 'graphql-tag'
 import query from './currentModel'
 import variablesQuery from '../../content/variables'
 

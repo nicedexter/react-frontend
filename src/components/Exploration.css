@@ -1,17 +1,2 @@
-.title {
-  margin: 5px;
-  width: 100%;
-}
 
 
-.exploration-tree-container
-  .groupContainer:nth-child(odd)
-  .tree-view
-  > .tree-view_item {
-  background-color: gainsboro;
-}
-
-#panel-exploration--body p {
-  font: 0.8em sans-serif;
-  margin-bottom: 20px;
-}

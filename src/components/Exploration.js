@@ -107,19 +107,11 @@ class Hierarchy extends React.PureComponent<Props> {
   groupView = (group: GroupsType, i: number) => {
     const c = group.subgroupCount
     const v = group.subvariablesCount
-
-    const display = (word, count) => count === 0 ? word : null
-    const pluralize = (word, count) => count > 1 ? `${word}s` : word
-    
-    // display('group', c)
-    
-    let groups = pluralize('group', c)
-    let subvariables = pluralize('variable', v)
-
-    // let description = c > 0 ? (c > 1 ? `${c} groups` : `${c} group`) : ''
-    // if (c > 0 && v > 0) description += ', '
-    // description += v > 0 ? (v > 1 ? `${v} variables` : `${v} variable`) : ''
-    const description = `${c} ${groups}  ${v} ${subvariables}`
+    const pluralize = (word, count) => count > 1 ? `${count} ${word}s` : `${count} ${word}`
+    let description = c > 0 ? pluralize('group', c) : ''
+    if (c > 0 && v > 0) description += ', '
+    description += v > 0 ? pluralize('variable', v) : ''
+    description = `(${description})`
 
     return (
       <div key={group.code} className="groupContainer">

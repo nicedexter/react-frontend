@@ -1,19 +1,10 @@
 // @flow
 
 import React from 'react'
-import { Panel, Pager } from 'react-bootstrap'
-import {
-  ExplorationContainer,
-  ModelContainer,
-} from './'
-import {
-  Datasets,
-  Analysis,
-  Experiment,
-  Results,
-} from '../components'
+import { Pager, Panel } from 'react-bootstrap'
 
-import './Main.css'
+import  { ExplorationContainer, ModelContainer } from '../containers'
+import './Layout.css'
 
 class ExperimentController extends React.PureComponent {
   constructor(props, context) {

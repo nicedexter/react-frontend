@@ -1,5 +1,8 @@
 // @flow
 
+export { default as App } from './App'
+export { default as Navbar } from './Navbar'
+export { default as Layout } from './Layout'
 export { default as Datasets } from './Datasets'
 export { default as Exploration } from './Exploration'
 export { default as Histogram } from './Histogram'

@@ -1,7 +1,7 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 class NavbarView extends PureComponent<*> {
