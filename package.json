@@ -14,13 +14,16 @@
     "highcharts": "^6.1.0",
     "highcharts-react-official": "^1.1.0",
     "prop-types": "^15.6.1",
+    "ramda": "^0.25.0",
     "react": "^16.4.0",
     "react-apollo": "^2.1.4",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.0",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
-    "react-table": "^6.8.6"
+    "react-table": "^6.8.6",
+    "redux": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
