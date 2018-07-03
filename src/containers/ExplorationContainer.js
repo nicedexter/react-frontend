@@ -8,7 +8,7 @@ import {
   withVariables,
   withUpdateCurrentModel,
   withCurrentModel
-} from '../connectors'
+} from '../graphql/connectors'
 import { Exploration } from '../components'
 import { HierarchyProps } from '../proptypes'
 

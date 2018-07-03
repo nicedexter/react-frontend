@@ -1,7 +1,7 @@
 // @flow
 
-import query from './currentModel'
-import variablesQuery from '../../content/variables'
+import {currentModel as query} from './'
+import variablesQuery from './queries/variables'
 
 export default {
   Mutation: {

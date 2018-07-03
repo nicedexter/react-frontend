@@ -1,3 +1,5 @@
+// @flow
+
 const typeDefs = `
 type Query {
   variables: [Variable]
@@ -23,6 +25,19 @@ type Mutation {
 }
 
 # Types
+
+type LocalModel {
+  index: String
+  title: String
+  slug: String
+  variables: [Variable]
+  covariables: [Variable] 
+  groupings: [Variable]
+  filters: [Variable] 
+  testingDatasets: [Variable]
+  trainingDatasets: [Variable]
+  validationDatasets: [Variable]
+}
 
 type Variable {
   code: String!

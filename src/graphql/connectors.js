@@ -1,14 +1,14 @@
 // @flow
 
 import { graphql } from 'react-apollo' // flowlint-line untyped-import:off
-import {
-  groupsAndVariables,
-  updateCurrentModel,
-  currentModel,
-  saveModel,
-  models,
-  datasets
-} from './graphql'
+
+// FIXME: import like { groupsAndVariable } from './' is broken ???
+import groupsAndVariables from './queries/groupsAndVariables'
+import updateCurrentModel from './mutations/updateCurrentModel'
+import currentModel from './queries/currentModel'
+import saveModel from './mutations/saveModel'
+import models from './queries/models'
+import datasets from './queries/datasets'
 
 export const withVariables = graphql(groupsAndVariables, {
   props: ({ data: { loading, error, variables, groups } }) => {

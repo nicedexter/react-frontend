@@ -1,29 +1,26 @@
 // @flow
 
-import mainSchema from './schema'
-import localModelSchema from './model/local/schema'
+export { default as schema } from './schema'
+export { default as connectors } from './connectors'
 
-const schema = mainSchema.concat(localModelSchema)
-export { schema }
-
-export { default as defaults } from './model/local/defaultState'
-export { default as resolvers } from './model/local/resolvers'
+export { default as defaults } from './defaultState'
+export { default as resolvers } from './resolvers'
 
 // Getters for main content
-export { default as datasets } from './content/datasets'
-export { default as groupsAndVariables } from './content/groupsAndVariables'
-export { default as methods } from './content/methods'
+export { default as datasets } from './queries/datasets'
+export { default as groupsAndVariables } from './queries/groupsAndVariables'
+export { default as methods } from './queries/methods'
 
 // MODELS - get/set remote models
-export { default as models } from './model/api/models'
-export { default as saveModel } from './model/api/saveModel'
+export { default as models } from './queries/models'
+export { default as saveModel } from './mutations/saveModel'
 
 // MODELS - Local - used to store augmented model
-export { default as updateCurrentModel } from './model/local/updateCurrentModel'
-export { default as currentModel } from './model/local/currentModel'
+export { default as updateCurrentModel } from './mutations/updateCurrentModel'
+export { default as currentModel } from './queries/currentModel'
 
 // Algorithms
-export { default as histogram } from './charts/histogram'
-export { default as summary } from './charts/summary'
-export { default as runExperiments } from './charts/runExperiments'
-export { default as experiments } from './charts/experiments'
+export { default as histogram } from './queries/histogram'
+export { default as summary } from './queries/summary'
+export { default as runExperiments } from './mutations/runExperiments'
+export { default as experiments } from './queries/experiments'

@@ -19,11 +19,6 @@ import './index.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'
 
-const root = document.getElementById('root')
-if (root == null) {
-  throw new Error('no root element')
-}
-
 const cache = new InMemoryCache()
 const stateLink = withClientState({
     cache,
@@ -40,6 +35,11 @@ const client = new ApolloClient({
     ]),
     cache,
 })
+
+const root = document.getElementById('root')
+if (root == null) {
+  throw new Error('no root element')
+}
 
 render(
   <ApolloProvider client={client}>

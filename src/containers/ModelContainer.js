@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import * as R from 'ramda'
+import { compose } from 'ramda'
 import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 
 import {
@@ -10,7 +10,7 @@ import {
   withSaveModel,
   withModels,
   withDatasets,
-} from '../connectors'
+} from '../graphql/connectors'
 import { Model, ModalTitleInput } from '../components'
 import { ModelProps } from '../proptypes'
 
@@ -134,7 +134,7 @@ class ModelContainer extends React.Component<Props> {
 
 ModelContainer.propTypes = propTypes
 
-export default R.compose(
+export default compose(
   withModels,
   withDatasets,
   withCurrentModel,
