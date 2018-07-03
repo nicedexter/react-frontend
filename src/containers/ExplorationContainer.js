@@ -5,7 +5,7 @@ import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import * as R from 'ramda'
 
 import {
-  withVariables,
+  withVariableHierarchy,
   withUpdateCurrentModel,
   withCurrentModel
 } from '../graphql/connectors'
@@ -58,7 +58,7 @@ class ExplorationContainer extends React.PureComponent<Props> {
 ExplorationContainer.propTypes = propTypes
 
 export default R.compose(
-  withVariables,
+  withVariableHierarchy,
   withCurrentModel,
   withUpdateCurrentModel
 )(ExplorationContainer)

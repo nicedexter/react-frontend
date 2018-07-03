@@ -1,6 +1,6 @@
 // @flow
 
-import {currentModel as query} from './'
+import { currentModel } from './'
 import variablesQuery from './queries/variables'
 
 export default {
@@ -9,7 +9,7 @@ export default {
       const { variables: variableList } = cache.readQuery({
         query: variablesQuery,
       })
-      const state = cache.readQuery({ query })
+      const state = cache.readQuery({ query: currentModel })
       const previousModel = state.currentModel
       const nextModel = Object.assign({}, previousModel)
 
@@ -47,7 +47,21 @@ export default {
       })
 
       const data = { currentModel: nextModel }
-      cache.writeQuery({ query, data })
+      cache.writeQuery({ query: currentModel, data })
+    },
+    importModelAsCurrentModel: (_, variables, { cache }) => {
+      const { title, slug, query } = variables
+      const nextModel = Object.assign(
+        {},
+        { ...query },
+        { covariables: query.coVariables },
+        { coVariables: [] },
+        { filters: [] },
+        { title, slug }
+      )
+
+      const data = { currentModel: nextModel }
+      cache.writeQuery({ query: currentModel, data })
     },
   },
 }

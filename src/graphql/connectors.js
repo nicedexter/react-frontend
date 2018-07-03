@@ -5,12 +5,13 @@ import { graphql } from 'react-apollo' // flowlint-line untyped-import:off
 // FIXME: import like { groupsAndVariable } from './' is broken ???
 import groupsAndVariables from './queries/groupsAndVariables'
 import updateCurrentModel from './mutations/updateCurrentModel'
+import importModelAsCurrentModel from './mutations/importModelAsCurrentModel'
 import currentModel from './queries/currentModel'
 import saveModel from './mutations/saveModel'
 import models from './queries/models'
 import datasets from './queries/datasets'
 
-export const withVariables = graphql(groupsAndVariables, {
+export const withVariableHierarchy = graphql(groupsAndVariables, {
   props: ({ data: { loading, error, variables, groups } }) => {
     const hierarchy =
       variables.length && groups ? makeHierarchy(groups.groups, variables) : []
@@ -19,9 +20,12 @@ export const withVariables = graphql(groupsAndVariables, {
       loading,
       error,
       hierarchy,
-      currentModel: { variables: [], covariables: [] },
     }
   },
+})
+
+export const withImportModelAsCurrentModel = graphql(importModelAsCurrentModel, {
+  name: 'importModelAsCurrentModel',
 })
 
 export const withUpdateCurrentModel = graphql(updateCurrentModel, {

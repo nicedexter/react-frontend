@@ -7,11 +7,12 @@ import PropTypes from 'prop-types' // flowlint-line untyped-import:off
 import {
   withCurrentModel,
   withUpdateCurrentModel,
+  withImportModelAsCurrentModel,
   withSaveModel,
   withModels,
   withDatasets,
 } from '../graphql/connectors'
-import { Model, ModalTitleInput } from '../components'
+import { Model, ModalTitleInput, ModelList } from '../components'
 import { ModelProps } from '../proptypes'
 
 const propTypes = {
@@ -74,18 +75,8 @@ class ModelContainer extends React.Component<Props> {
   }
 
   handleSelect = eventKey => {
-    console.log(eventKey)
-    const { models, updateCurrentModel } = this.props
-    const { title, slug, query, __typename } = models[eventKey]
-    const variables = Object.assign(
-      {},
-      { ...query },
-      { covariables: query.coVariables },
-      { coVariables: [] },
-      { filters: [] },
-      { title, slug }
-    )
-    updateCurrentModel({ variables })
+    const { models, importModelAsCurrentModel } = this.props
+    importModelAsCurrentModel({ variables: models[eventKey] })
   }
 
   handleDelete = (_, variable, type) => {
@@ -119,6 +110,7 @@ class ModelContainer extends React.Component<Props> {
             handleSave={this.handleSaveModal}
           />
         )}
+        <ModelList models={models} handleSelect={this.handleSelect} title={currentModel.title}/>
         <Model
           models={models}
           datasets={datasets}
@@ -139,5 +131,6 @@ export default compose(
   withDatasets,
   withCurrentModel,
   withSaveModel,
-  withUpdateCurrentModel
+  withUpdateCurrentModel,
+  withImportModelAsCurrentModel,
 )(ModelContainer)

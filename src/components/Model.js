@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { Label, Button, SplitButton, MenuItem } from 'react-bootstrap'
+import { Label, Button } from 'react-bootstrap'
 
 import { Datasets } from '.'
 
@@ -28,20 +28,7 @@ const Model = ({
   currentModel: ModelType,
 }) => (
   <div>
-    <SplitButton
-      bsStyle="default"
-      bsSize="xsmall"
-      title={title}
-      id={'split-button'}
-    >
-      {models &&
-        models.map((m, i) => (
-          <MenuItem eventKey={i} key={m.slug} onSelect={handleSelect}>
-            {m.title}
-          </MenuItem>
-        ))}
-    </SplitButton>
-
+    
     <h4>Datasets ({(datasets && datasets.length) || 0})</h4>
     <div className="datasets">
       {datasets && datasets.map(v => <Label key={v.code}>{v.label}</Label>)}

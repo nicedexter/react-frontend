@@ -39,6 +39,15 @@ type LocalModel {
   validationDatasets: [Variable]
 }
 
+type Query {
+  variables: [Variable]
+  covariables: [Variable]
+  filters: [Variable]
+  testingDatasets: [Variable]
+  trainingDatasets: [Variable]
+  validationDatasets: [Variable]
+}
+
 type Variable {
   code: String!
   label: String
