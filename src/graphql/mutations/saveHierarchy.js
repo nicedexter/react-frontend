@@ -2,9 +2,8 @@
 
 import gql from 'graphql-tag'
 
-// TODO: add api result to models
 export default gql`
-  mutation saveModel(
+  mutation saveHierarchy(
     $title: String
     $slug: String
     $variables: [VariableInput]!
@@ -15,7 +14,7 @@ export default gql`
     $trainingDatasets: [VariableInput]
     $validationDatasets: [VariableInput]
   ) {
-    saveModel(
+    saveHierarchy(
       title: $title
       slug: $slug
       variables: $variables

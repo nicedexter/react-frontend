@@ -12,7 +12,7 @@ import {
   withModels,
   withDatasets,
 } from '../graphql/connectors'
-import { Model, ModalTitleInput, ModelList } from '../components'
+import { Model, ModalTitleInput, ModelDropdown } from '../components'
 import { ModelProps } from '../proptypes'
 
 const propTypes = {
@@ -62,7 +62,6 @@ class ModelContainer extends React.Component<Props> {
       })
 
       updateCurrentModel({ variables: { slug: newModel.slug, title: value } })
-
       this.setState({ showModal: false })
     } catch (error) {
       console.log(error)
@@ -74,9 +73,15 @@ class ModelContainer extends React.Component<Props> {
     this.setState({ showModal: false })
   }
 
-  handleSelect = eventKey => {
+  handleSelectModel = eventKey => {
     const { models, importModelAsCurrentModel } = this.props
     importModelAsCurrentModel({ variables: models[eventKey] })
+  }
+
+  handleSelectVariable = (event, variable) => {
+    event.preventDefault()
+    const { updateCurrentModel } = this.props
+    updateCurrentModel({ variables: { selectedVariable: variable.code } })
   }
 
   handleDelete = (_, variable, type) => {
@@ -110,13 +115,17 @@ class ModelContainer extends React.Component<Props> {
             handleSave={this.handleSaveModal}
           />
         )}
-        <ModelList models={models} handleSelect={this.handleSelect} title={currentModel.title}/>
+        <ModelDropdown
+          models={models}
+          handleSelect={this.handleSelectModel}
+          title={currentModel.title}
+        />
         <Model
           models={models}
           datasets={datasets}
           currentModel={currentModel}
           handleSave={this.handleSave}
-          handleSelect={this.handleSelect}
+          handleSelect={this.handleSelectVariable}
           handleDelete={this.handleDelete}
         />
       </div>
@@ -132,5 +141,5 @@ export default compose(
   withCurrentModel,
   withSaveModel,
   withUpdateCurrentModel,
-  withImportModelAsCurrentModel,
+  withImportModelAsCurrentModel
 )(ModelContainer)

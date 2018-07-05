@@ -42,6 +42,7 @@ export default gql`
       validationDatasets {
         ...VariableParts
       }
+      selectedVariable
     }
   }
 `

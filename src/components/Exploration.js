@@ -29,32 +29,26 @@ class Hierarchy extends React.PureComponent<Props> {
   }
 
   includesVariable = code => {
-    const {
-      currentModel: { variables },
-    } = this.props
-    return variables.map(v => v.code).includes(code)
+    const { currentModel } = this.props
+    return (
+      currentModel && currentModel.variables.map(v => v.code).includes(code)
+    )
   }
 
   includesCovariable = code => {
-    const {
-      currentModel: { covariables },
-    } = this.props
-    return covariables.map(v => v.code).includes(code)
+    const { currentModel } = this.props
+    return currentModel && currentModel.covariables.map(v => v.code).includes(code)
   }
 
   includesVariablesInGroup = code => {
-    const {
-      currentModel: { variables },
-    } = this.props
+    const { currentModel } = this.props
 
-    return variables.map(v => v.group && v.group.code).includes(code)
+    return currentModel && currentModel.variables.map(v => v.group && v.group.code).includes(code)
   }
 
   includesCovariablesInGroup = code => {
-    const {
-      currentModel: { covariables },
-    } = this.props
-    return covariables.map(v => v.group && v.group.code).includes(code)
+    const { currentModel } = this.props
+    return currentModel && currentModel.covariables.map(v => v.group && v.group.code).includes(code)
   }
 
   description = (variable: VariableType) => (
@@ -104,10 +98,11 @@ class Hierarchy extends React.PureComponent<Props> {
     </React.Fragment>
   )
 
-  groupView = (group: GroupsType, i: number) => {
+  groupView = (group: GroupsType, selectedVariable: String) => {
     const c = group.subgroupCount
     const v = group.subvariablesCount
-    const pluralize = (word, count) => count > 1 ? `${count} ${word}s` : `${count} ${word}`
+    const pluralize = (word, count) =>
+      count > 1 ? `${count} ${word}s` : `${count} ${word}`
     let description = c > 0 ? pluralize('group', c) : ''
     if (c > 0 && v > 0) description += ', '
     description += v > 0 ? pluralize('variable', v) : ''
@@ -116,10 +111,10 @@ class Hierarchy extends React.PureComponent<Props> {
     return (
       <div key={group.code} className="groupContainer">
         <TreeView
-          key={group.code + '|' + i}
+          key={group.code}
           nodeDescription={description}
           nodeTitle={group.label}
-          defaultCollapsed={true}
+          defaultCollapsed={this.includesVariablesInGroup(selectedVariable)}
           nodeIcon={<Glyphicon glyph="briefcase" />}
         >
           {group.variables ? this.variableView(group.variables) : null}
@@ -147,12 +142,14 @@ class Hierarchy extends React.PureComponent<Props> {
     ))
 
   render() {
-    const { hierarchy }: { hierarchy: GroupsType[] } = this.props
+    const {
+      hierarchy,
+    }: { hierarchy: GroupsType[] } = this.props
     return (
       <React.Fragment>
         <p>Add to model as variable, covariable, filter</p>
         <div className="exploration-tree-container">
-          {hierarchy.map(this.groupView)}
+          {hierarchy.map(this.groupView, [])}
         </div>
       </React.Fragment>
     )

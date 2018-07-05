@@ -1,21 +1,28 @@
 // @flow
 
-import { currentModel } from './'
+import currentModelQuery from './queries/currentModel'
 import variablesQuery from './queries/variables'
+import hierarchyQuery from './queries/hierarchy'
 
 export default {
   Mutation: {
+    saveHierarchy: (_, variables, { cache }) => {
+      const data = { hierarchy: variables }
+      cache.writeQuery({ query: hierarchyQuery, data })
+    },
     updateCurrentModel: (_: any, variables, { cache }: { cache: any }) => {
-      const { variables: variableList } = cache.readQuery({
+      const { variables: variableList, groups } = cache.readQuery({
         query: variablesQuery,
       })
-      const state = cache.readQuery({ query: currentModel })
+      const state = cache.readQuery({ query: currentModelQuery })
       const previousModel = state.currentModel
       const nextModel = Object.assign({}, previousModel)
 
-      const { title, slug, ...others } = variables
+      const { title, slug, selectedVariable, ...others } = variables
       if (title) nextModel.title = title
       if (slug) nextModel.slug = slug
+
+      nextModel.selectedVariable = selectedVariable || {}
 
       Object.keys(others).map(name => {
         const elements = variables[name]
@@ -47,7 +54,7 @@ export default {
       })
 
       const data = { currentModel: nextModel }
-      cache.writeQuery({ query: currentModel, data })
+      cache.writeQuery({ query: currentModelQuery, data })
     },
     importModelAsCurrentModel: (_, variables, { cache }) => {
       const { title, slug, query } = variables
@@ -57,11 +64,12 @@ export default {
         { covariables: query.coVariables },
         { coVariables: [] },
         { filters: [] },
-        { title, slug }
+        { title, slug },
+        { selectedVariable: {} }
       )
 
       const data = { currentModel: nextModel }
-      cache.writeQuery({ query: currentModel, data })
+      cache.writeQuery({ query: currentModelQuery, data })
     },
   },
 }

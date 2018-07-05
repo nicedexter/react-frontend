@@ -14,10 +14,15 @@ import { resolvers, defaults, schema } from './'
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
-      case 'Experiment':
-        return object.uuid
+      case 'CurrentModel':
+      case 'Model':
+        return object.slug
+      case 'Dataset':
+      case 'Group':
+      case 'Variable':
+        return object.code
       default:
-        return object.uuid || object.code
+        return object.uuid
     }
   },
 })
@@ -33,7 +38,7 @@ const client = new ApolloClient({
   link: ApolloLink.from([
     stateLink,
     new HttpLink({
-      uri: 'http://localhost:3000/graphql/',
+      uri: 'http://155.105.202.23:3000/graphql/',
     }),
   ]),
   cache,

@@ -9,12 +9,14 @@ import './Model.css'
 import { ModelProps } from '../proptypes'
 import { datasets } from '../graphql'
 
-const label = (v, select, type) => (
-  <div className="variables-label" key={v.code}>
-    <a href="javascript: void(0)" onClick={e => select(e, v, type)}>
+const label = (variable, select, remove, type) => (
+  <div className="variables-label" key={variable.code}>
+    <a onClick={e => remove(e, variable, type)}>
       x
     </a>
-    <Label>{v.label}</Label>
+    <a onClick={e => select(e, variable)}>
+      <Label>{variable.label}</Label>
+    </a>
   </div>
 )
 
@@ -36,18 +38,18 @@ const Model = ({
 
     <h4>Variables ({(variables && variables.length) || 0}/1)</h4>
     <div className="variables">
-      {variables && variables.map(v => label(v, handleDelete, 'variables'))}
+      {variables && variables.map(v => label(v, handleSelect, handleDelete, 'variables'))}
     </div>
 
     <h4>Covariables ({(covariables && covariables.length) || 0})</h4>
     <div className="covariables">
       {covariables &&
-        covariables.map(v => label(v, handleDelete, 'covariables'))}
+        covariables.map(v => label(v, handleSelect, handleDelete, 'covariables'))}
     </div>
 
     <h4>Filters</h4>
     <div className="filters">
-      {filters && filters.map(v => label(v, handleDelete, 'filters'))}
+      {filters && filters.map(v => label(v, handleSelect, handleDelete, 'filters'))}
     </div>
     
     <Button bsSize="small" onClick={handleSave} style={{ width: '100%' }}>

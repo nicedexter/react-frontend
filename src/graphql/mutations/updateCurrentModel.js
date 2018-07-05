@@ -3,6 +3,20 @@
 import gql from 'graphql-tag'
 
 export default gql`
+  fragment VariableParts on Variable {
+    code
+    label
+    type
+    sql_type
+    description
+    methodology
+    group {
+      code
+      label
+    }
+    isVariable
+  }
+
   mutation updateCurrentModel(
     $title: String
     $slug: String
@@ -12,6 +26,7 @@ export default gql`
     $testingDatasets: [Variable]
     $trainingDatasets: [Variable]
     $validationDatasets: [Variable]
+    $selectedVariable: Variable
   ) {
     updateCurrentModel(
       title: $title
@@ -22,6 +37,7 @@ export default gql`
       testingDatasets: $testingDatasets
       trainingDatasets: $trainingDatasets
       validationDatasets: $validationDatasets
+      selectedVariable: $selectedVariable
     ) @client {
       title
       slug
@@ -43,6 +59,7 @@ export default gql`
       validationDatasets {
         ...VariableParts
       }
+      selectedVariable
     }
   }
 `

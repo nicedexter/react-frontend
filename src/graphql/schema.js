@@ -22,11 +22,22 @@ type Mutation {
     validationDatasets: [VariableInput]
   ): Model
   runExperiment(name: String, model: String, algorithms: String, datasets: String): Experiment
+  mutation updateCurrentModel(
+    title: String
+    slug: String
+    variables: [Variable]
+    covariables: [Variable]
+    filters: [Variable]
+    testingDatasets: [Variable]
+    trainingDatasets: [Variable]
+    validationDatasets: [Variable]
+    selectedVariable: Variable
+  ) : CurrentModel
 }
 
 # Types
 
-type LocalModel {
+type CurrentModel {
   index: String
   title: String
   slug: String
@@ -37,6 +48,7 @@ type LocalModel {
   testingDatasets: [Variable]
   trainingDatasets: [Variable]
   validationDatasets: [Variable]
+  selectedVariable: Variable
 }
 
 type Query {

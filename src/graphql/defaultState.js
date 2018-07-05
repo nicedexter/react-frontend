@@ -2,8 +2,8 @@
 
 export default {
   currentModel: {
-    __typename: 'LocalModel',
-    title: 'Unsaved model',
+    __typename: 'CurrentModel',
+    title: 'Current model',
     slug: '',
     variables: [],
     covariables: [],
@@ -12,5 +12,6 @@ export default {
     testingDatasets: [],
     trainingDatasets: [],
     validationDatasets: [],
+    selectedVariable: {}
   },
 }
